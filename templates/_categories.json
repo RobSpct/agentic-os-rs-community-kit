@@ -1,0 +1,24 @@
+{
+  "_comment": "Skill-Kategorien fuer die Skill-Matrix im Agentic-OS-Launcher. Liegt unter ~/.claude/skills/_categories.json. Listet NUR die mitgelieferten Template-Skills. Beim Hinzufuegen/Auslagern eigener Skills hier den Namen ergaenzen/entfernen, sonst zeigt die Matrix tote Eintraege.",
+
+  "tiefe-recherche": "Wissen & Recherche",
+  "erklaer-mir": "Wissen & Recherche",
+  "vault-notiz": "Wissen & Recherche",
+
+  "plan-tag": "Planung & Vault",
+  "plan-woche": "Planung & Vault",
+  "session-uebergabe": "Planung & Vault",
+  "task-roadmap": "Planung & Vault",
+
+  "morning": "Email & Briefing",
+  "morgen-briefing": "Email & Briefing",
+  "posteingang": "Email & Briefing",
+  "briefing-abarbeiten": "Email & Briefing",
+  "manage-email": "Email & Briefing",
+
+  "competitor-analysis": "Analyse",
+
+  "cleanup": "Build & Dev",
+
+  "council": "Core / Meta"
+}

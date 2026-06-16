@@ -1,0 +1,34 @@
+{
+  "_comment": "Agentic OS Dashboard-Settings. Liegt unter ~/.agentic-os/settings.json. Beim Setup hierher kopieren. accent = CI-Akzentfarbe (CSS-Var-Override). tokenLimit5h = Nenner der Token-Bar (Schaetzkonstante, kein offizielles Anthropic-Limit; bei Abweichung justieren). valueMultiplier = grobe Kosten-Hochrechnung. tabsVisible schaltet Dashboard-Tabs ein/aus.",
+  "tabsVisible": {
+    "BOARD": true,
+    "RESEARCH": true,
+    "BRIEFING": true,
+    "COMPETITOR": true
+  },
+  "refreshMs": 60000,
+  "accent": "#E23636",
+  "tokenLimit5h": 35000000,
+  "valueMultiplier": 20,
+  "graph": {
+    "colorByFolder": true,
+    "animate": true,
+    "maxNodes": 200
+  },
+  "integrations": {
+    "jira": {
+      "enabled": false,
+      "domain": "",
+      "projectKey": ""
+    },
+    "github": {
+      "enabled": false,
+      "username": "",
+      "tokenRef": "",
+      "repos": [],
+      "repo": ""
+    }
+  },
+  "vaultDir": "",
+  "tasksFile": ""
+}

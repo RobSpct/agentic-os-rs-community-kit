@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Competitor Analysis (generic)",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "project", "market", "axes", "competitors", "summary"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "generatedAt": { "type": "string" },
+    "project": {
+      "type": "object",
+      "required": ["purpose", "features", "usps", "sourceCommit"],
+      "properties": {
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "usps": { "type": "array", "items": { "type": "string" } },
+        "sourceCommit": { "type": "string" }
+      }
+    },
+    "market": {
+      "type": "object",
+      "required": ["projectPosition", "totalPlayers", "avgThreat", "featureParityPct", "topThreat"],
+      "properties": {
+        "projectPosition": { "type": "integer" },
+        "totalPlayers": { "type": "integer" },
+        "avgThreat": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "featureParityPct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "topThreat": { "type": "string" }
+      }
+    },
+    "axes": {
+      "type": "array",
+      "const": ["nische", "feature", "sentiment", "etabliert", "mehrwert"]
+    },
+    "competitors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "url", "threatScore", "axisScores", "relativeToProject", "verdict", "gaps", "evidence"],
+        "properties": {
+          "name": { "type": "string" },
+          "url": { "type": "string" },
+          "logo": { "type": ["string", "null"] },
+          "threatScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "axisScores": {
+            "type": "object",
+            "required": ["nische", "feature", "sentiment", "etabliert", "mehrwert"],
+            "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 100 }
+          },
+          "relativeToProject": {
+            "type": "object",
+            "additionalProperties": { "enum": ["ahead", "parity", "behind"] }
+          },
+          "userBase": { "type": "string" },
+          "rating": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "number" },
+              "source": { "type": "string" },
+              "count": { "type": "integer" }
+            }
+          },
+          "established": { "type": "string" },
+          "verdict": { "type": "string", "maxLength": 260 },
+          "gaps": { "type": "array", "items": { "type": "string" } },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "url"],
+              "properties": { "label": { "type": "string" }, "url": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["headline", "bullets"],
+      "properties": {
+        "headline": { "type": "string" },
+        "bullets": { "type": "array", "items": { "type": "string" }, "maxItems": 3 }
+      }
+    }
+  }
+}

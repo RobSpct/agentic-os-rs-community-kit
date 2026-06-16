@@ -1,0 +1,38 @@
+{
+  "_comment": "Optionaler Andock-Punkt fuer Jira-/GitHub-Anbindung. Liegt im Vault-Root (<VAULT_ROOT>/integrations.json). Standard: inaktiv (enabled:false) - kein Netzwerk, kein Ticket-Bau. Das Kanban-Board ist der Spiegel; sobald eine Jira-Org/GitHub-Repo existiert, hier enabled:true + Felder fuellen. 'repo' = owner/repo -> aggregate.js leitet daraus Branch-/Commit-/PR-Links ab. 'domain' = JIRA-Host (z.B. myco.atlassian.net) -> Browse-Links.",
+  "jira": {
+    "enabled": false,
+    "domain": "",
+    "projectKey": "",
+    "tokenRef": ""
+  },
+  "github": {
+    "enabled": false,
+    "repo": "",
+    "username": "",
+    "tokenRef": "env:GITHUB_TOKEN",
+    "repos": []
+  },
+  "_mapping_comment": "Deklaratives Feld-Mapping fuer den Scrum/JIRA<->GitHub-Sync. Rein dokumentarisch, solange enabled:false. statusMap = Kanban-Spalte -> JIRA-Status.",
+  "mapping": {
+    "idTag": "@id:",
+    "issueKeyField": "jiraKey",
+    "scrum": {
+      "epic": "epic",
+      "story": "story",
+      "sprint": "sprint",
+      "status": "status"
+    },
+    "statusMap": {
+      "backlog": "To Do",
+      "todo": "To Do",
+      "in-progress": "In Progress",
+      "done": "Done"
+    },
+    "github": {
+      "branchField": "branch",
+      "prField": "prNumber",
+      "commitsField": "commits"
+    }
+  }
+}

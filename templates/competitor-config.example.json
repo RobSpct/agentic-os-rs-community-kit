@@ -1,0 +1,16 @@
+{
+  "_comment": "Beispiel-config fuer den competitor-analysis-Skill. Wird beim Erst-Lauf pro Projekt automatisch erzeugt (der Skill liest das Repo + fragt bei Unklarheit). Diese Datei zeigt nur die Struktur. Liegt unter <projekt>/.claude/skills/competitor-analysis/config.json.",
+  "projectName": "MyProject",
+  "projectPurpose": "<Zweck/Nische des Projekts in 1-2 Saetzen>",
+  "projectRepoPath": "C:/Users/<You>/Dev/MyProject",
+  "vaultPath": "<VAULT_ROOT>",
+  "slug": "myproject",
+  "seedCompetitors": [
+    "<Competitor A>",
+    "<Competitor B>"
+  ],
+  "searchQueries": [
+    "<gezielte Suchanfrage zur Nische 1>",
+    "<gezielte Suchanfrage zur Nische 2>"
+  ]
+}

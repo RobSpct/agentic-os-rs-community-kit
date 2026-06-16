@@ -1,0 +1,20 @@
+# Patch-/Backup-Snapshots (lokale Wegwerf-Dateien)
+*.bak
+*.bak[0-9]*
+*.bak-*
+
+# User-Settings des Plugins (nie ausliefern)
+data.json
+
+# Obsidian-Vault-Interna
+.obsidian/
+
+# Node
+node_modules/
+
+# OS-Müll
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

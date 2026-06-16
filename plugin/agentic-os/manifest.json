@@ -1,0 +1,10 @@
+{
+	"id": "agentic-os",
+	"name": "Agentic OS",
+	"version": "0.1.0",
+	"minAppVersion": "1.5.0",
+	"description": "Führt Claude Code in einem eingebetteten Terminal direkt in Obsidian aus (node-pty, plattformübergreifend: macOS + Windows/ConPTY). Multi-Tab, Pop-out, Dashboard mit Skill-/Agent-Launcher, Token-Bar, Task-Roadmap, Kanban-Board, Briefing und Competitor-Cockpit.",
+	"author": "Sebastian Kauffmann (Windows-Port & Dashboard-Features: Community)",
+	"authorUrl": "https://skaile.de",
+	"isDesktopOnly": true
+}

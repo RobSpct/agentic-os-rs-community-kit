@@ -1,2 +1,12 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Native binaries — never normalize line endings (would corrupt them)
+*.node binary
+*.dll binary
+*.dylib binary
+*.so binary
+spawn-helper binary
+
+# Minified bundle — keep byte-exact, no EOL conversion
+plugin/agentic-os/main.js -text
