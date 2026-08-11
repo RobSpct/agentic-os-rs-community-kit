@@ -64,20 +64,25 @@ Regeln:
 
 ## 4. Optional als Vault-Notiz ablegen
 
-Frag am Ende: "Soll ich das als Notiz speichern?" Falls ja (oder wenn schon im Auftrag steht), schreib die Zusammenfassung per `Write` nach `{{VAULT_PFAD}}/recherche-[kurz-slug].md`.
+Frag am Ende: "Soll ich das als Notiz speichern?" Falls ja (oder wenn schon im Auftrag steht), schreib die Zusammenfassung per `Write` nach `<<VAULT_ROOT>>\wiki\recherche-[kurz-slug].md`.
 
-Ersetze `{{VAULT_PFAD}}` durch deinen Notiz-Ordner (z.B. dein Obsidian-Vault wie `~/Documents/mein-vault/wiki`). Wenn du keinen Vault nutzt, speichere in den Projektordner oder lass das Speichern weg.
-
-Frontmatter fuer die Notiz:
+Frontmatter fuer die Notiz (Projekt-Tag-Pflicht nach `AgenticOS/CLAUDE.md`:
+klar einem Projekt zuzuordnen → Projekt-Tag kleingeschrieben dazu, Schema
+`<projekt-kuerzel>` (z.B. `webshop`, `app`); sonst explizit `cross-projekt`):
 
 ```markdown
 ---
 title: Recherche - [Frage]
-tags: [recherche]
+tags: [recherche, <projekt-tag oder cross-projekt>, <1-2 inhaltliche tags>]
 created: [YYYY-MM-DD]
 sources: [Liste der URLs]
 ---
 ```
+
+Danach Pflicht-Nacharbeit wie bei jeder Wiki-Seite (siehe vault-notiz-Skill):
+
+1. `index.md`-Zeile anhaengen: `| [[wiki/recherche-slug]] | tags | YYYY-MM-DD | Kurzbeschreibung |`
+2. `log.md`-Eintrag oben: `## [YYYY-MM-DD] ingest | Recherche [Thema] aufgenommen`
 
 Danach den Notiz-Pfad ausgeben, damit man sie wiederfindet.
 

@@ -29,7 +29,7 @@ Pfad seiner config: `<skill-ordner>/config.json`.
   "projectName": "<Name>",
   "projectPurpose": "<Zweck/Nische in 1-2 Sätzen>",
   "projectRepoPath": "<cwd des Projekts>",
-  "vaultPath": "{{VAULT_ROOT}}",
+  "vaultPath": "<<VAULT_ROOT>>",
   "slug": "<kebab>",
   "seedCompetitors": ["..."],
   "searchQueries": ["..."]
@@ -40,7 +40,7 @@ Pfad seiner config: `<skill-ordner>/config.json`.
 Projekt/Zweck. Repo trotzdem für aktuellen Stand neu lesen (Features/USPs können sich
 ändern). Nische/Seeds/Queries kommen aus config.
 
-> `vaultPath` ist der AgenticOS-Vault-Root (`{{VAULT_ROOT}}`, z.B. `C:/Users/<You>/AgenticOS`).
+> `vaultPath` ist der AgenticOS-Vault-Root (`<<VAULT_ROOT>>`, z.B. `C:/Users/<dein-name>/AgenticOS`).
 > Beim Setup auf deinen Vault-Pfad setzen.
 
 ## Parameter (Defaults)

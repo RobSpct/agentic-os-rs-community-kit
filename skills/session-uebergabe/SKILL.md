@@ -46,7 +46,7 @@ Schreib mit **Write** genau eine Datei. Sprache: die des Users (default Deutsch)
 2. Sonst ein `handoffs/`-Ordner im Projekt-Root (lege ihn an, falls noetig).
 3. Sonst ins aktuelle Arbeitsverzeichnis.
 
-Wenn der User einen anderen Ort will (z.B. seinen Obsidian-Vault unter `{{VAULT_PFAD}}`), schreib dahin. Ersetze `{{VAULT_PFAD}}` durch deinen echten Vault-Pfad, falls du den nutzt.
+Wenn der User einen anderen Ort will (z.B. seinen Obsidian-Vault unter `<<VAULT_ROOT>>`), schreib dahin.
 
 **Dateiname**: `HANDOFF-<YYYY-MM-DD>-<kurzes-thema>.md`, z.B. `HANDOFF-2026-06-07-login-bug.md`. Datum aus dem System-Datum, nicht raten. Bei mehreren Handoffs am selben Tag eine `-2` anhaengen statt eine bestehende Datei zu ueberschreiben.
 
@@ -58,7 +58,7 @@ Roadmap aktuell, ohne dass der User von Hand abhaken muss. Diesen Schritt KOMPLE
 wenn kein registriertes Projekt erkannt wird.
 
 1. **Projekt bestimmen (per Arbeitsverzeichnis).** Lies die Registry
-   `C:\Users\<NAME>\AgenticOS\projects.json` (Vault-Pfad des Users; falls du ihn kennst, nutze ihn
+   `<<VAULT_ROOT>>\projects.json` (Vault-Pfad des Users; falls du ihn kennst, nutze ihn
    direkt — hier im Vault liegt sie). Jeder Eintrag hat `name`, `emoji`, `todo` (absoluter Pfad zur
    Projekt-`TODO.md`). Ermittle das aktuelle Arbeitsverzeichnis der Session und finde den Eintrag,
    dessen Projekt-Ordner das cwd enthaelt. Kein eindeutiger Treffer -> Schritt ueberspringen.
@@ -77,7 +77,7 @@ wenn kein registriertes Projekt erkannt wird.
    `- [x]` (per Edit, exakter Zeilen-Match am Aufgabentext). Aendere sonst nichts an der Datei.
 6. **Roadmap aktualisieren.** Fuehr den Aggregator aus, damit das Dashboard die Aenderung zeigt:
    ```bash
-   node "C:/Users/<NAME>/.claude/skills/task-roadmap/aggregate.js"
+   node "<<CLAUDE_DIR>>/skills/task-roadmap/aggregate.js"
    ```
    (Pfad an den echten User anpassen; Script ist fehlertolerant.)
 

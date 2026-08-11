@@ -17,9 +17,9 @@ projects.json   ──►  aggregate.js  ──►  task-roadmap.json  ──4s�
    └─ je Projekt eine TODO.md (kanonische Quelle, vom User/session-uebergabe gepflegt)
 ```
 
-- **Registry:** `{{VAULT_ROOT}}/projects.json` — Liste der Projekte:
+- **Registry:** `<<VAULT_ROOT>>/projects.json` — Liste der Projekte:
   ```json
-  [ { "name": "MyProject", "key": "PROJ", "emoji": "🚀", "todo": "C:/Users/<You>/Dev/MyProject/TODO.md" } ]
+  [ { "name": "MyProject", "key": "PROJ", "emoji": "🚀", "todo": "<<HOME>>/Dev/MyProject/TODO.md" } ]
   ```
   `key` = Issue-Key-Prefix für die stabilen Ticket-IDs (`@id:KEY-N`, JIRA-nah). Fehlt `key`,
   wird er aus `name` abgeleitet (Uppercase, gekürzt).
@@ -35,7 +35,7 @@ projects.json   ──►  aggregate.js  ──►  task-roadmap.json  ──4s�
   ```
   Erkannte Ampeln: 🔴/Kritisch/Muss, 🟡/Wichtig/Sollte, 🟢/Nice/Optional. Checkboxen ohne
   Sektion landen unter 🟡.
-- **Anzeige-Modell:** `{{VAULT_ROOT}}/task-roadmap.json` (wird generiert, nicht
+- **Anzeige-Modell:** `<<VAULT_ROOT>>/task-roadmap.json` (wird generiert, nicht
   von Hand editieren). Abhaken im Dashboard schreibt `done` hierhin zurück; ein erneuter Lauf
   bewahrt diesen Status (gleiche Task-ID).
 
@@ -75,9 +75,9 @@ TODO.md **schlagen** den Vorlauf-JSON-Stand; ohne Tag bleibt ein per Sync gesetz
 Führe das Aggregator-Script aus (deterministisch, idempotent, kein LLM nötig):
 
 ```bash
-node "<CLAUDE_HOME>/.claude/skills/task-roadmap/aggregate.js"
+node "<<CLAUDE_DIR>>/skills/task-roadmap/aggregate.js"
 ```
-(`<CLAUDE_HOME>` = dein User-Home, z.B. `C:/Users/<You>` bzw. `~` auf macOS/Linux.)
+(`<<CLAUDE_DIR>>` = dein Claude-Ordner, z.B. `C:/Users/<dein-name>/.claude` bzw. `~/.claude`.)
 
 Danach kurz bestätigen: wie viele Projekte/Aufgaben eingesammelt wurden (Script gibt eine
 Zeile aus) und dass das Dashboard binnen ~4 s aktualisiert.

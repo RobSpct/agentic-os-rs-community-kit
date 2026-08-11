@@ -26,12 +26,9 @@ Das Ziel ist immer: **eine Notiz, ein Thema.** Lieber zwei kleine klare Notizen 
 
 ## Wo landet die Notiz?
 
-Frag dich kurz, wo der Vault liegt. Ueblich:
-
-- `{{VAULT_PATH}}` - Pfad zum Obsidian-Vault. Ersetze `{{VAULT_PATH}}` durch deinen echten Vault-Ordner (z.B. `~/Documents/mein-vault`).
-- Innerhalb davon ein sinnvoller Unterordner, z.B. `{{NOTIZEN_ORDNER}}` (z.B. `notes/`, `inbox/` oder `wiki/`).
-
-Wenn du den Pfad nicht kennst: einmal kurz beim User erfragen ("In welchen Ordner soll die Notiz?") oder einen erkennbaren Standard-Ordner nutzen und es ihm sagen. Nicht raten und still wegspeichern.
+Vault: `<<VAULT_ROOT>>`. Notizen landen in `wiki/<thema>.md`
+(kuratierte Wissensseiten, siehe `AgenticOS/CLAUDE.md`). Nicht in `memory/`
+(Auto-Memory, anderer Zweck) und nicht in `raw/` (immutable Quellen-Archiv).
 
 ## Workflow
 
@@ -49,8 +46,8 @@ Destilliere, statt eins-zu-eins zu kopieren. Stichpunkte zu klaren Saetzen, Gere
 
 Bevor du schreibst, schau dir den Vault an, damit du sinnvoll verlinken kannst und keine Dublette anlegst:
 
-1. Mit **Glob** alle Markdown-Dateien im Vault finden, z.B. Pattern `{{VAULT_PATH}}/**/*.md`.
-2. Falls ein Index existiert (z.B. `index.md`), den mit **Read** lesen - er ist die schnellste Landkarte.
+1. Mit **Glob** alle Markdown-Dateien im Vault finden, z.B. Pattern `<<VAULT_ROOT>>/**/*.md`.
+2. Mit **Grep** nach den Kernbegriffen des neuen Themas suchen (Volltext) - findet verwandte Notizen zuverlaessiger als ein Katalog, dessen Zusammenfassungsspalte duenner ist als der Inhalt.
 3. Anhand der Dateinamen 2-6 thematisch verwandte Notizen identifizieren, die du als `[[Link]]` setzen kannst.
 4. Pruefen, ob es schon eine fast gleichnamige Notiz gibt → falls ja, Schritt aus "Sicherheit zuerst" anwenden.
 
@@ -71,6 +68,8 @@ Struktur der Datei:
 title: <Klarer Titel>
 tags: [<2-4 sinnvolle tags>]
 created: <YYYY-MM-DD>
+sources:
+  - <woher der Gedanke kam, z.B. raw/quelle.md oder "Gespraech mit User">
 ---
 
 # <Klarer Titel>
@@ -86,6 +85,11 @@ created: <YYYY-MM-DD>
 - [[Verwandte-Notiz-1]]
 - [[Verwandte-Notiz-2]]
 ```
+
+**Projekt-Tag-Pflicht** (siehe `AgenticOS/CLAUDE.md`): gehoert die Notiz klar zu
+einem Repo/Projekt → Projekt-Tag kleingeschrieben ins `tags:`-Array (Schema:
+`<projekt-kuerzel>`, z.B. `webshop` / `app`). Cross-Projekt-Wissen
+(User-Profil, generisches Tooling) → explizit `cross-projekt`.
 
 **Sektionen nach Notiz-Typ** (waehle adaptiv, erzwinge nicht alle):
 
@@ -106,16 +110,35 @@ Regeln fuer den Inhalt:
 - `created`-Datum aus dem echten Systemdatum nehmen, nicht raten.
 - `tags` ohne `#` im Frontmatter-Array (Obsidian-Konvention), z.B. `tags: [content, hook]`.
 
-### Schritt 5: Optional verlinken (Rueckverlinkung)
+### Schritt 5: Index aktualisieren (Pflicht, nicht optional)
 
-Wenn es eine zentrale Index-Notiz gibt und der User das moechte: mit **Edit** einen Eintrag fuer die neue Notiz im Index ergaenzen, Format z.B. `- [[Neue-Notiz]] - Einzeiler`. Niemals den Index unaufgefordert umstrukturieren - nur eine Zeile anhaengen.
+`index.md` ist der Master-Katalog aller Wiki-Seiten (siehe `AgenticOS/CLAUDE.md`)
+und muss nach jeder neuen Notiz mit **Edit** eine Zeile bekommen:
+`| [[wiki/thema]] | tag1, tag2 | YYYY-MM-DD | Kurzbeschreibung |`.
+Niemals den Index sonst umstrukturieren - nur die eine Zeile anhaengen.
 
-### Schritt 6: Kurze Rueckmeldung
+### Schritt 6: log.md-Eintrag (Pflicht)
+
+Oben in `log.md` (append-only, neueste Eintraege oben) eine Zeile ergaenzen:
+`## [YYYY-MM-DD] ingest | <Thema> aufgenommen`.
+
+### Schritt 7: Auto-Wikilink-Hook beachten
+
+Ein PostToolUse-Hook verlinkt nach dem Schreiben automatisch Klartext-Erwaehnungen
+existierender Wiki-Slugs zu `[[wiki/slug|Text]]`. Konsequenzen:
+- Referenz-Namen muessen exakt zum echten Slug passen (Tippfehler/alter Slug wird
+  nicht erkannt, bleibt als broken Link stehen).
+- Reine Pfadangaben ohne Link-Absicht in Backticks setzen (`` `wiki/xyz` ``) -
+  die laesst der Hook in Ruhe.
+- Details: `AgenticOS/CLAUDE.md`, Abschnitt "Auto-Wikilink-Hook (Gotcha)".
+
+### Schritt 8: Kurze Rueckmeldung
 
 Sag dem User in 1-2 Zeilen:
 
 - Wie die Notiz heisst und wo sie liegt (voller Pfad).
 - Mit welchen vorhandenen Notizen sie verlinkt ist.
+- Dass `index.md` + `log.md` aktualisiert wurden.
 
 Keine Roman-Zusammenfassung. Der User wollte etwas festhalten, nicht eine Praesentation.
 
@@ -123,13 +146,15 @@ Keine Roman-Zusammenfassung. Der User wollte etwas festhalten, nicht eine Praese
 
 User: "notier das mal - Hooks die mit einer Frage starten performen bei mir besser als Statement-Hooks, hab ich diese Woche gemerkt"
 
-Ergebnis-Datei `{{VAULT_PATH}}/{{NOTIZEN_ORDNER}}/Frage-Hooks-schlagen-Statement-Hooks.md`:
+Ergebnis-Datei `<<VAULT_ROOT>>\wiki\frage-hooks-schlagen-statement-hooks.md`:
 
 ```markdown
 ---
 title: Frage-Hooks schlagen Statement-Hooks
 tags: [content, hook, insight]
 created: 2026-06-03
+sources:
+  - Gespraech mit User
 ---
 
 # Frage-Hooks schlagen Statement-Hooks
@@ -150,15 +175,17 @@ Hooks, die mit einer Frage starten, performen bei mir aktuell besser als Stateme
 - [[Content-Strategie]]
 ```
 
-Rueckmeldung an User: "Liegt als `Frage-Hooks-schlagen-Statement-Hooks.md` im Vault, verlinkt mit [[Hook-Archetypen]] und [[Content-Strategie]]."
+Rueckmeldung an User: "Liegt als `wiki/frage-hooks-schlagen-statement-hooks.md`, verlinkt mit [[Hook-Archetypen]] und [[Content-Strategie]], `index.md`+`log.md` aktualisiert."
 
 ## Checkliste vor dem Speichern
 
 - [ ] Ein Thema, ein klarer Titel.
-- [ ] Frontmatter mit `title`, `tags`, `created` (echtes Datum).
+- [ ] Frontmatter mit `title`, `tags` (inkl. Projekt-Tag falls zutreffend), `created` (echtes Datum), `sources`.
 - [ ] Inhalt destilliert, nicht roh kopiert.
 - [ ] Mindestens 1-2 sinnvolle `[[Links]]` (falls passende Notizen existieren).
 - [ ] Keine Dublette ohne Rueckfrage angelegt.
+- [ ] `index.md`-Zeile ergaenzt.
+- [ ] `log.md`-Eintrag oben ergaenzt.
 - [ ] Vollen Pfad an den User zurueckgemeldet.
 
 _Teil des Agentic OS Skill-Bundles - frei anpassbar._

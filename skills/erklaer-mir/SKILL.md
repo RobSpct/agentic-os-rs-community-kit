@@ -82,6 +82,6 @@ Fehlermeldungen wirken bedrohlich, sind aber meist nur das Programm, das ehrlich
 
 ## Anpassen
 
-Dieser Skill braucht keinen persoenlichen Kontext und keine MCPs. Falls du eigene Lieblings-Analogien oder ein bestimmtes Fachgebiet hast (z.B. immer Vergleiche aus dem Handwerk), kannst du das hier unten ergaenzen: ersetze {{EIGENE_ANALOGIE_WELT}} durch deine bevorzugte Vergleichswelt (z.B. "Gastronomie", "Buchhaltung", "Musik"), dann zieht der Skill seine Bilder bevorzugt von dort.
+Dieser Skill braucht keinen persoenlichen Kontext und keine MCPs. Falls du eigene Lieblings-Analogien oder ein bestimmtes Fachgebiet hast (z.B. immer Vergleiche aus dem Handwerk), kannst du das hier unten ergaenzen: ersetze <<ANALOGIE_WELT>> durch deine bevorzugte Vergleichswelt (z.B. "Gastronomie", "Buchhaltung", "Musik"), dann zieht der Skill seine Bilder bevorzugt von dort.
 
 _Teil des Agentic OS Skill-Bundles - frei anpassbar._
