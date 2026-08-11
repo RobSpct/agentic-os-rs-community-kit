@@ -1,5 +1,5 @@
 {
-  "_comment": "Optionaler Andock-Punkt fuer Jira-/GitHub-Anbindung. Liegt im Vault-Root (<VAULT_ROOT>/integrations.json). Standard: inaktiv (enabled:false) - kein Netzwerk, kein Ticket-Bau. Das Kanban-Board ist der Spiegel; sobald eine Jira-Org/GitHub-Repo existiert, hier enabled:true + Felder fuellen. 'repo' = owner/repo -> aggregate.js leitet daraus Branch-/Commit-/PR-Links ab. 'domain' = JIRA-Host (z.B. myco.atlassian.net) -> Browse-Links.",
+  "_comment": "Optionaler Andock-Punkt fuer Jira-/GitHub-Anbindung. Liegt im Vault-Root (<<VAULT_ROOT>>/integrations.json). Standard: inaktiv (enabled:false) - kein Netzwerk, kein Ticket-Bau. Das Kanban-Board ist der Spiegel; sobald eine Jira-Org/GitHub-Repo existiert, hier enabled:true + Felder fuellen. 'repo' = owner/repo -> aggregate.js leitet daraus Branch-/Commit-/PR-Links ab. 'domain' = JIRA-Host (z.B. myco.atlassian.net) -> Browse-Links.",
   "jira": {
     "enabled": false,
     "domain": "",

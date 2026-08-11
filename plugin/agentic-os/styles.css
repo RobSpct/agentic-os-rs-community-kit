@@ -38,6 +38,38 @@
   display: flex !important;
   flex-direction: column !important;
 }
+
+/* Code-Graph-Leaf: iframe braucht volle Höhe, Kopfzeile bleibt fix oben. */
+.workspace-leaf-content[data-type="agentic-os-graph"] .view-content.agentic-os-root,
+.workspace-leaf-content[data-type="agentic-os-graphify"] .view-content.agentic-os-root {
+  padding: 0 !important;
+  overflow: hidden !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+.agentic-os-graph-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.agentic-os-graph-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+.agentic-os-graph-status {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+.agentic-os-graph-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
 .workspace-leaf-content[data-type="agentic-os-terminal"] .chat-pane {
   flex: 1 1 auto;
   min-height: 0;
@@ -166,7 +198,7 @@
   letter-spacing: .14em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all .15s;
+  transition: color .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -191,7 +223,7 @@
   background: #0f0f0f;
   color: var(--muted);
   cursor: pointer;
-  transition: all .15s;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
 }
 .agentic-os-root .iconbtn:hover {
   color: var(--text);
@@ -211,7 +243,7 @@
   letter-spacing: .12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all .15s;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -263,7 +295,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all .12s;
+  transition: border-color .12s ease, background .12s ease, box-shadow .12s ease;
   flex: 0 0 auto;
 }
 .agentic-os-root .chk:hover { border-color: #555; }
@@ -399,18 +431,28 @@
   background: linear-gradient(90deg, transparent, #1f1f1f, transparent);
 }
 
-/* burn-fill shimmer */
-@keyframes agentic-flow { from { background-position: 0 0; } to { background-position: 24px 0; } }
+/* burn-fill shimmer
+   transform statt background-position: laeuft auf dem Compositor (kein Repaint
+   pro Frame). Das Muster kachelt alle 24px horizontal, deshalb ist eine
+   Verschiebung um exakt -24px visuell identisch zum alten Loop. Das Overlay ist
+   um 24px breiter als der Parent, damit beim Verschieben rechts nichts ausduennt;
+   overflow:hidden am Parent beschneidet den Ueberstand. */
+@keyframes agentic-flow { from { transform: translateX(0); } to { transform: translateX(-24px); } }
 .agentic-os-root .burn-fill {
   background: linear-gradient(90deg, #E23636, #B81F1F);
   box-shadow: 0 0 12px rgba(226,54,54,.45), inset 0 1px 0 rgba(255,255,255,.18);
   position: relative;
+  overflow: hidden;
 }
 .agentic-os-root .burn-fill::after {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: -24px;
   background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.08) 0 1px, transparent 1px 8px);
+  will-change: transform;
   animation: agentic-flow 1.6s linear infinite;
 }
 
@@ -491,7 +533,7 @@
   font-size: 10px;
   white-space: nowrap;
   opacity: 0;
-  transition: all .12s;
+  transition: opacity .12s ease, transform .12s ease;
   pointer-events: none;
   margin-top: 4px;
   font-family: 'JetBrains Mono', monospace;
@@ -2122,7 +2164,11 @@
   font-size: 12px;
 }
 
-/* ---------- Modal-Stuck Banner ---------- */
+/* ---------- Modal-Stuck Banner ----------
+   Gradient-Interpolation ist immer Repaint. Stattdessen liegt der hellere
+   Zustand als Overlay darueber und nur dessen opacity pulsiert — gleiche
+   Optik, aber Compositor statt Repaint pro Frame. Kinder brauchen
+   position:relative, damit sie ueber dem Overlay bleiben. */
 .agentic-os-root .modal-stuck-banner {
   display: flex;
   align-items: center;
@@ -2133,11 +2179,24 @@
   border-top: 1px solid #4a2010;
   border-bottom: 1px solid #4a2010;
   flex-shrink: 0;
+  position: relative;
+}
+.agentic-os-root .modal-stuck-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #3a1c14, #2a120c);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
   animation: stuck-pulse 2s ease-in-out infinite;
 }
+.agentic-os-root .modal-stuck-banner > * {
+  position: relative;
+}
 @keyframes stuck-pulse {
-  0%, 100% { background: linear-gradient(90deg, #2a1410, #1a0a08); }
-  50% { background: linear-gradient(90deg, #3a1c14, #2a120c); }
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 .agentic-os-root .modal-stuck-info {
   display: flex;
@@ -2652,7 +2711,7 @@
   letter-spacing: .12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all .15s;
+  transition: border-color .15s ease, color .15s ease;
 }
 .skpack:hover { border-color: var(--accent); color: var(--accent); }
 .skpack .tri { color: var(--accent); font-size: 9px; display: inline-block; width: 10px; }
@@ -2743,11 +2802,11 @@
 }
 .graph-zoom button:hover { color: var(--accent); border-color: var(--accent); }
 
-/* Competitor Analytik */
+/* HYCO Competitor Analytik */
 .threat-rank{display:flex;align-items:center;gap:10px;padding:4px 0}
-.comp-bar{position:relative;height:12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;overflow:hidden}
-.comp-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#C0392B,#E23636);border-radius:2px;box-shadow:0 0 8px rgba(226,54,54,.4)}
-.comp-radar{display:block;margin:0 auto}
+.hyco-bar{position:relative;height:12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;overflow:hidden}
+.hyco-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#C0392B,#E23636);border-radius:2px;box-shadow:0 0 8px rgba(226,54,54,.4)}
+.hyco-radar{display:block;margin:0 auto}
 .rel-badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;padding:1px 4px;border:1px solid;border-radius:3px;margin-left:2px}
 
 /* === Board: Filter + Swimlanes (Phase 2/3) === */
@@ -2893,4 +2952,55 @@
 .agentic-os-root .comp-btn:hover {
   background: var(--accent);
   color: #0a0a0a;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   Respektiert die OS-Einstellung "Animationen reduzieren".
+   Transitions/Animationen werden praktisch abgeschaltet (1ms statt 0s, damit
+   transitionend/animationend-Handler weiterhin feuern und nichts haengen bleibt).
+
+   Ausnahme: Status-Indikatoren behalten ihren Endzustand sichtbar, statt zu
+   verschwinden — sie tragen Information, keine Dekoration:
+   - .cursor (agentic-blink)  -> sichtbar statt blinkend
+   - .live-dot (agentic-pulse) -> volle Deckkraft statt pulsierend
+   - Token-Burn-Bar (agentic-flow) -> statischer Verlauf statt laufend
+   - .thinking / .stuck / Stop-Button -> sichtbar statt pulsierend
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .agentic-os-root *,
+  .agentic-os-root *::before,
+  .agentic-os-root *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Status-Indikatoren: Endzustand fixieren statt ausblenden */
+  .agentic-os-root .cursor {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .agentic-os-root .live-dot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .agentic-os-root .burn-fill::after {
+    animation: none !important;
+    background-position: 0 0 !important;
+  }
+  .agentic-os-root .thinking-dots span {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .agentic-os-root .chat-stop-btn {
+    animation: none !important;
+  }
+  /* Stuck-Banner: Puls-Overlay aus, Grundgradient bleibt sichtbar */
+  .agentic-os-root .modal-stuck-banner::before {
+    animation: none !important;
+    opacity: 0 !important;
+  }
 }

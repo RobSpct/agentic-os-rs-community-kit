@@ -3,13 +3,13 @@
     "name": "MyProject",
     "key": "PROJ",
     "emoji": "🚀",
-    "todo": "C:/Users/<You>/Dev/MyProject/TODO.md",
-    "path": "C:/Users/<You>/Dev/MyProject"
+    "todo": "<<HOME>>/Dev/MyProject/TODO.md",
+    "path": "<<HOME>>/Dev/MyProject"
   },
   {
     "name": "Inbox",
     "key": "INBOX",
     "emoji": "📥",
-    "todo": "<VAULT_ROOT>/Inbox-TODO.md"
+    "todo": "<<VAULT_ROOT>>/Inbox-TODO.md"
   }
 ]
