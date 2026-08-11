@@ -1,70 +1,91 @@
 # CLAUDE.md
 
-Leitet Claude Code beim Arbeiten am **Agentic OS** Plugin (Community-Template) an.
+Leitet Claude Code beim Arbeiten **an diesem Repo** an (nicht beim Installieren — das steht
+in `INSTALL.md`).
 
 ## Was das ist
 
-**Agentic OS** ist ein Obsidian-Plugin, das **Claude Code in einem eingebetteten
-Terminal** direkt in Obsidian betreibt (node-pty / ConPTY, Multi-Tab, Pop-out) — plus
-ein Dashboard mit Skill-Launcher, Token-Bar, Task-Roadmap, Kanban-Board, Briefing-Tab
-und Competitor-Cockpit. Basiert auf dem Plugin von Sebastian Kauffmann (skaile.de),
-hier als selbst-installierbares Community-Template mit Windows-Port + Dashboard-Features.
+Die Community-Version eines kompletten Claude-Code-Setups: das Obsidian-Plugin **Agentic OS**
+(Claude Code im eingebetteten Terminal, node-pty / ConPTY, Multi-Tab, Dashboard), ein
+Second-Brain-Vault-Template, 18 kuratierte Skills, Hooks, Review-Agents und eine
+CLAUDE.md-Vorlage. Ein User installiert das per Prompt in vier Stufen (FULL / MEDIUM / SMALL /
+SKILLS-ONLY).
 
-Setup: siehe `INSTALL.md` (1-Prompt-Installation). Windows-Hintergrund: `WINDOWS-SETUP.md`.
-
-## Tech Stack
-
-| Layer | Technologie |
-|---|---|
-| Host | Obsidian Plugin API (Desktop-only, `isDesktopOnly:true`) |
-| UI | React über jsx-runtime, gebündelt in **minifiziertem `main.js`** (eine Zeile) |
-| Terminal | node-pty — Windows: ConPTY (`win32-x64` N-API-Binaries) |
-| Styling | `styles.css` |
-| Skills | liegen im Claude-Root (`~/.claude/skills`), NICHT im Plugin. Loader liest `~/.claude/skills` + Plugin-Caches zur Laufzeit. |
-| Token-Bar | `ccusage` CLI via `npx` (5-Stunden-Block) |
+Basiert auf dem Plugin von Sebastian Kauffmann (skaile.de); Windows-Port, Dashboard-Features
+und Paketierung von RobSpct. Lizenz MIT, siehe `LICENSE`.
 
 ## Projektstruktur
 
 ```
-plugin/agentic-os/        Das Plugin (main.js, manifest.json, styles.css, native/)
-skills/                   Skills für Briefing/Board/Competitor (→ ~/.claude/skills)
-skills-library/           Lager-Konzept (inaktive Skills)
-templates/                Config-Vorlagen (settings/projects/integrations/_categories/competitor-config)
-INSTALL.md README.md WINDOWS-SETUP.md
+plugin/agentic-os/     Das Plugin (main.js minifiziert, manifest.json, styles.css, native/)
+skills/                18 Skills → ~/.claude/skills (competitor-analysis: projekt-lokal)
+claude-setup/          Globales Setup: CLAUDE.global.template.md, hooks/, agents/,
+                       statusline/, settings.template.json, RTK.md
+vault-template/        Second-Brain-Gerüst → Vault des Users
+templates/             Config-Vorlagen (settings/projects/integrations/_categories/competitor)
+skills-library/        Konzept-Doku: inaktive Skills auslagern
+INSTALL.md             Stufen-Installer (Prosa für Claude, KEIN Shell-Skript)
+README.md              Einstieg für den User
+WINDOWS-SETUP.md       Windows-Hintergrund + Troubleshooting
 ```
 
-> **Kein eingebetteter `skills/`-Ordner im Plugin.** Der Plugin-Loader liest Skills
-> ausschließlich aus `~/.claude/skills` + `~/.claude/plugins/cache/<id>/skills`. Ein
-> Plugin-eigener `skills/`-Ordner würde ignoriert. Die `skills/` in diesem Repo sind ein
-> **getrennter Installations-Strang** (kommen in den Claude-Root, via `INSTALL.md`).
+> **Kein `skills/`-Ordner im Plugin.** Der Plugin-Loader liest Skills ausschließlich aus
+> `~/.claude/skills` + `~/.claude/plugins/cache/<id>/skills`. Die `skills/` hier sind ein
+> getrennter Installations-Strang.
+
+## Konventionen
+
+**Platzhalter: ausschließlich `<<NAME>>`.** Vokabular: `<<HOME>>`, `<<VAULT_ROOT>>`,
+`<<CLAUDE_DIR>>`, `<<NODE>>`, `<<PROJECT_NAME>>`. Kein `{{X}}`, kein `<You>`, kein `YOUR_*`
+(letzteres nur in fremder API-Doku, die wir zitieren).
+
+**Sprache:** Deutsch, Tech-Begriffe englisch.
+
+**Der Installer ist Prosa, kein Skript.** `INSTALL.md` wird von Claude gelesen und agentisch
+ausgeführt. Also: eindeutige Anweisungen, klare Reihenfolge, benannte Verifikationsschritte —
+keine Bash-Einzeiler, die auf einer fremden Maschine raten müssen.
 
 ## Plugin patchen — Pflicht-Workflow
 
-`main.js` ist minifiziert (~660 KB, eine Zeile). Patchen ist chirurgisch:
+`main.js` ist minifiziert (~700 KB, praktisch eine Zeile). Patchen ist chirurgisch:
 
 1. **Read-only analysieren** zuerst (Node-Snippet / Grep), Patch-Stelle finden.
-2. **Byte-Replace mit eindeutigem Anker** — Trefferzahl **== 1** verifizieren, sonst ABBRUCH.
-3. **Backup vor jedem Patch** (`main.js.bak`).
-4. Schreiben als **UTF-8 ohne BOM** — sonst bricht das Bundle. Nie OS-Copy-Befehle für JS
-   nutzen, die UTF-16/NUL erzeugen können.
-5. **`node --check main.js`** nach jedem Patch — muss grün sein.
+2. **Anker aus der Datei selbst schneiden**, nicht aus dem Kopf nachbauen — Escapes in
+   minifiziertem Code (`\\` vs. `\`) nachzubilden geht schief.
+3. **Trefferzahl verifizieren** (i.d.R. == 1), sonst ABBRUCH.
+4. **Klammer-Balance prüfen.** Ein Ausschnitt kann unbalanciert sein (z.B. Balance −1, weil er
+   einen weiter oben geöffneten Block schließt). Der Ersatz muss dieselbe Balance haben.
+5. **Vor dem Schreiben Syntax prüfen** (`new vm.Script(...)` auf dem Ergebnis) — nicht erst
+   danach. Kaputte Datei gar nicht erst schreiben.
+6. **Backup in den Scratchpad**, nicht ins Repo (`.bak` ist gitignored, aber der Working Tree
+   soll sauber bleiben).
+7. Schreiben als **UTF-8 ohne BOM**, LF-Zeilenenden. Nie OS-Copy-Befehle nutzen, die UTF-16
+   oder CRLF erzeugen.
+8. **`node --check main.js`** nach jedem Patch.
+
+**Nicht blind Zeichen ersetzen.** Umlaute und Em-Dashes liegen korrekt als UTF-8 im Bundle;
+was in mancher Konsole nach Mojibake aussieht, ist meist nur die Anzeige. Erst messen
+(Codepoints ausgeben), dann fixen.
 
 ## Architektur-Kernpunkte
 
-- **Workspaces:** cwd-Picker im „+"-Popup. Default-Workspaces: **Home** + **Vault** (dynamisch
-  über den Obsidian-Vault-Pfad) + Claude Root (`~/.claude`). Workspace ist ein freier String —
-  eigene cwd-Zweige im Resolver ergänzbar.
+- **Workspaces:** cwd-Picker im „+"-Popup. Default: Home, Vault (dynamisch über
+  `app.vault.adapter.getBasePath()`), Claude Root (`~/.claude`), neutral (Home).
 - **Terminal-Spawn (Windows):** `claude.cmd` direkt spawnen scheitert (ERROR 193) → läuft über
   `cmd.exe /c claude.cmd <args>`.
-- **ConPTY-Drain:** node-pty nutzt sonst `worker_threads.Worker`, was im Obsidian-Renderer
-  verboten ist → ersetzt durch Inline-Socket-Piping (`native/win32-x64/lib/windowsConoutConnection.js`).
+- **ConPTY-Drain:** node-pty nutzt sonst `worker_threads.Worker`, im Obsidian-Renderer
+  verboten → ersetzt durch Inline-Socket-Piping
+  (`native/win32-x64/lib/windowsConoutConnection.js`).
 - **Token-Bar:** `ccusage` via `npx` (Windows braucht `cmd.exe /c`-Wrap). Prozent =
-  `verbraucht / tokenLimit5h` (Schätzkonstante in `settings.json`, kein offizielles Limit).
-- **Task-Roadmap / Kanban:** `TODO.md` je Projekt = Wahrheit → `aggregate.js` → `task-roadmap.json`
-  (abgeleitet, nicht von Hand editieren). Registry: `<vault>/projects.json`. Status als
-  `@status:`-Tag in der TODO.md-Zeile, `done` = `- [x]`.
-- **Competitor:** projekt-lokaler Skill (`<projekt>/.claude/skills/competitor-analysis/`),
-  Tab „COMPETITOR" mit Dropdown. Schema v2, defensiv gegen v1.
+  `verbraucht / tokenLimit5h` (Schätzkonstante, kein offizielles Limit).
+- **Task-Roadmap / Kanban:** `TODO.md` je Projekt = Wahrheit → `aggregate.js` →
+  `task-roadmap.json` (abgeleitet, nicht von Hand editieren). Registry:
+  `<vault>/projects.json`. Status als `@status:`-Tag, `done` = `- [x]`.
+- **Briefing:** liest `<Vault>/Briefings` (über `bi()`, den Vault-Helper des Bundles).
+- **Jira-Autolink:** Domain und Project-Key kommen aus `integrations.json` über
+  `readSettings()`, gecacht (5 s). Ohne aktivierte Jira-Integration wird nicht verlinkt.
+- **Competitor:** projekt-lokaler Skill, Tab „COMPETITOR" mit Dropdown. Schema v2, defensiv
+  gegen v1.
 
 ## Bekannte Tücken
 
@@ -73,23 +94,26 @@ INSTALL.md README.md WINDOWS-SETUP.md
 - `worker_threads` im Obsidian-Renderer verboten → „Failed to construct 'Worker'".
 - ccusage rastert den 5h-Block auf volle Stunde → Reset-Zeit weicht von Claude.ai ab; ehrlich
   als Schätzung labeln.
+- `templates/settings.json` und die `settingsDefaults()` im Bundle müssen dieselben
+  `tabsVisible`-Schlüssel kennen, sonst verschwinden Tabs stillschweigend.
 
-## Second Brain — Vault-Regeln (Empfehlung)
+## Release-Hygiene
 
-Wenn du Agentic OS als persönliches Second Brain nutzt, lege im Vault eine Wissens-Struktur an
-und pflege sie:
+Vor jedem Push prüfen — 0 Treffer außerhalb der Attribution in `LICENSE`/`README.md`:
 
-- **Query** — bei Wissensfragen zuerst den Vault durchsuchen (Glob + Grep), nicht aus Erinnerung.
-- **Ingest** — neues Wissen ablegen (z.B. `raw/<thema>-<datum>.md` immutable Quelle,
-  `wiki/<thema>.md` gepflegte Seite mit Frontmatter + `[[wikilinks]]`, Index aktualisieren).
-- **Lint** — auf Widersprüche, Veraltetes, verwaiste Seiten, broken wikilinks prüfen.
+```bash
+grep -rn "Work User\|HYCO\|hyco\|robin\|specht" --exclude-dir=.git .
+grep -rn "{{\|YOUR_\|<You>\|<NAME>" --exclude-dir=.git --exclude-dir=plugin .
+```
 
-So bleibt der Vault die persistente Wissensquelle über Sessions hinweg.
+Dazu: `node --check` über `plugin/agentic-os/main.js`, alle Hooks und Scripts; alle `*.json`
+parsebar; `_categories.json` deckungsgleich mit `skills/`.
 
 ## Arbeitsweise
 
-- **Erst planen, dann bauen** bei größeren Eingriffen — Optionen mit Trade-offs + Empfehlung,
-  Approval abwarten.
-- **Bei Fehlern:** ehrlich + direkt benennen → lösungsorientiert → Ursache festhalten.
-- **Backups vor riskanten Schritten**, nichts Unwiederbringliches ohne OK.
-- **Modular denken** — Features sollen auch für andere Projekte sauber gehen.
+- **Erst planen, dann bauen** bei größeren Eingriffen — Optionen mit Trade-offs + Empfehlung.
+- **Bei Fehlern:** ehrlich benennen → lösungsorientiert → Ursache festhalten.
+- **Nie ins Live-Setup des Users schreiben.** `~/.claude`, `~/.claude.json` und der echte Vault
+  sind beim Arbeiten an diesem Repo **read-only Quellen**. Geschrieben wird nur ins Repo, in
+  den Scratchpad und in bewusst angelegte Testumgebungen.
+- **Modular denken** — Features sollen auch für andere Setups sauber funktionieren.

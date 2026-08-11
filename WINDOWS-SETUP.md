@@ -66,8 +66,9 @@ Claude.ai abweichen — das ist erwartetes Verhalten, kein Bug.
 
 **Task-Roadmap / Board bleibt leer.**
 → Lief `node aggregate.js` (erzeugt `task-roadmap.json` im Vault)? Liegt `projects.json`
-im Vault-Root mit gültigen TODO.md-Pfaden? Bei abweichendem Vault-Pfad die ENV
-`AGENTICOS_VAULT` setzen (siehe `INSTALL.md` Schritt 6).
+im Vault-Root mit gültigen TODO.md-Pfaden? Zeigt `env.AGENTICOS_VAULT` in
+`~/.claude/settings.json` auf deinen Vault? Die Variable ist der Schalter, an dem auch die
+Vault-Hooks hängen — ohne sie sind sie absichtlich inert (siehe `INSTALL.md`, Modul M2).
 
 ---
 
