@@ -4,7 +4,8 @@
     "BOARD": true,
     "RESEARCH": true,
     "BRIEFING": true,
-    "COMPETITOR": true
+    "COMPETITOR": true,
+    "VAULT": true
   },
   "refreshMs": 60000,
   "accent": "#E23636",

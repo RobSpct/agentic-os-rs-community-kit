@@ -2802,11 +2802,11 @@
 }
 .graph-zoom button:hover { color: var(--accent); border-color: var(--accent); }
 
-/* HYCO Competitor Analytik */
+/* Competitor Analytik */
 .threat-rank{display:flex;align-items:center;gap:10px;padding:4px 0}
-.hyco-bar{position:relative;height:12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;overflow:hidden}
-.hyco-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#C0392B,#E23636);border-radius:2px;box-shadow:0 0 8px rgba(226,54,54,.4)}
-.hyco-radar{display:block;margin:0 auto}
+.threat-bar{position:relative;height:12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;overflow:hidden}
+.threat-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#C0392B,#E23636);border-radius:2px;box-shadow:0 0 8px rgba(226,54,54,.4)}
+.threat-radar{display:block;margin:0 auto}
 .rel-badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;padding:1px 4px;border:1px solid;border-radius:3px;margin-left:2px}
 
 /* === Board: Filter + Swimlanes (Phase 2/3) === */
