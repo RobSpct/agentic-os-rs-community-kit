@@ -99,15 +99,20 @@ was in mancher Konsole nach Mojibake aussieht, ist meist nur die Anzeige. Erst m
 
 ## Release-Hygiene
 
-Vor jedem Push prüfen — 0 Treffer außerhalb der Attribution in `LICENSE`/`README.md`:
+Vor jedem Push:
 
 ```bash
-grep -rn "Work User\|HYCO\|hyco\|robin\|specht" --exclude-dir=.git .
-grep -rn "{{\|YOUR_\|<You>\|<NAME>" --exclude-dir=.git --exclude-dir=plugin .
+node scripts/release-gates.js
 ```
 
-Dazu: `node --check` über `plugin/agentic-os/main.js`, alle Hooks und Scripts; alle `*.json`
-parsebar; `_categories.json` deckungsgleich mit `skills/`.
+Prüft in acht Gates: Personendaten (Pfade, Projektnamen, Klarnamen — Attribution nur in
+`LICENSE`/`README.md`/`CLAUDE.md`/`manifest.json` erlaubt), Platzhalter-Konvention, `node --check`
+über alle eigenen `.js`/`.mjs`, JSON-Validität, BOMs, Deckung `skills/` ↔ `_categories.json`,
+`tabsVisible`-Konsistenz zwischen Bundle und Template sowie die erwartete Repo-Struktur.
+Exit-Code 1 bei jedem Fund.
+
+Neue Ausnahmen sparsam ergänzen: Eine Ausnahme, die einen echten Leak durchlässt, ist teurer
+als ein Fehlalarm, den man einmal von Hand prüft.
 
 ## Arbeitsweise
 
