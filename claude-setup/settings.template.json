@@ -1,0 +1,108 @@
+{
+  "_comment": "Vorlage fuer ~/.claude/settings.json. NICHT einfach drueberkopieren — der Installer MERGED sie in eine vorhandene settings.json (Backup vorher, Hook-Arrays additiv mit Duplikat-Check ueber den command-String). Platzhalter: <<NODE>> = Pfad zur node-Executable (oder schlicht 'node', wenn es auf dem PATH liegt), <<CLAUDE_DIR>> = dein Claude-Ordner (i.d.R. ~/.claude), <<VAULT_ROOT>> = dein Obsidian-Vault. Alle drei muessen ersetzt sein, sonst feuern die Hooks ins Leere.",
+  "env": {
+    "AGENTICOS_VAULT": "<<VAULT_ROOT>>"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/context-mode-cache-heal.mjs\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/skills/task-roadmap/aggregate.js\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/tooling-discipline-guard.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/plan-first-guard.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/ui-skill-hint.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/large-change-hint.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/db-skill-hint.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/memory-tags-guard.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/vault-wikilink.js\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/vault-read-order-hint.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/skill-routing-reminder.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "<<NODE>> \"<<CLAUDE_DIR>>/statusline/statusline.js\""
+  },
+  "autoMemoryEnabled": true,
+  "autoMemoryDirectory": "<<VAULT_ROOT>>/memory",
+  "skillListingBudgetFraction": 0.05,
+  "alwaysThinkingEnabled": false,
+  "tui": "fullscreen",
+  "_hinweise": [
+    "context-mode-cache-heal.mjs (SessionStart) nur bei installiertem context-mode-Plugin eintragen.",
+    "aggregate.js (SessionStart) nur bei installiertem task-roadmap-Skill eintragen.",
+    "Ohne gesetztes env.AGENTICOS_VAULT sind memory-tags-guard und vault-wikilink absichtlich inert."
+  ]
+}
