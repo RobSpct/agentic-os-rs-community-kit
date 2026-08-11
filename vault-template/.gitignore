@@ -1,0 +1,14 @@
+# Obsidian-Interna (maschinenspezifisch)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Generierte Anzeige-Modelle (aus TODO.md bzw. wiki/ reproduzierbar)
+task-roadmap.json
+exports/
+
+# Arbeitsartefakte
+.planning/
+*.bak
+*.bak-*
+*.log
+nul
