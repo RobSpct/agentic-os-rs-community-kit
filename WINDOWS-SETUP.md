@@ -60,9 +60,11 @@ Inhalt im selben Layout unter `<plugin>/native/win32-x64/` ablegen
 (`lib/`, `package.json`, `prebuilds/win32-x64/*.node`). Die `lib/`-JS ist plattform-identisch.
 
 **Token-Bar bleibt leer, kein Fehler.**
-→ `ccusage` braucht beim ersten Lauf einen Moment (`npx -y ccusage@latest`). Internet
-nötig. Die Reset-Zeit ist eine ccusage-Schätzung (stunden-gerastert) und kann von
-Claude.ai abweichen — das ist erwartetes Verhalten, kein Bug.
+→ `ccusage` braucht beim ersten Lauf einen Moment (`npx -y ccusage@20.0.19`). Internet
+nötig. Die Version ist bewusst gepinnt — ändert ccusage sein JSON-Format, bliebe die Bar
+sonst dauerhaft leer. Die Reset-Zeit ist eine ccusage-Schätzung (stunden-gerastert) und kann
+von Claude.ai abweichen — das ist erwartetes Verhalten, kein Bug. Fehlt ccusage oder schlägt
+der Aufruf fehl, zeigt die Bar den Fehler an; der Rest des Dashboards läuft weiter.
 
 **Task-Roadmap / Board bleibt leer.**
 → Lief `node aggregate.js` (erzeugt `task-roadmap.json` im Vault)? Liegt `projects.json`
