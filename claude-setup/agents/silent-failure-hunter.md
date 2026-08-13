@@ -1,6 +1,6 @@
 ---
 name: silent-failure-hunter
-description: Review code for silent failures, swallowed errors, bad fallbacks, and missing error propagation.
+description: Silent failure and error-handling specialist. Use PROACTIVELY after writing or changing code with try/catch blocks, error handling, fallback values, optional chaining on critical paths, or async operations. Hunts swallowed errors, empty catch blocks, misleading defaults, and missing error propagation that hide bugs in production.
 model: sonnet
 tools: [Read, Grep, Glob, Bash]
 ---

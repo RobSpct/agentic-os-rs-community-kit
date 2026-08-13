@@ -30,6 +30,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/skill-gate.js\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
             "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/tooling-discipline-guard.js\"",
             "timeout": 5
           },
@@ -89,6 +94,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "<<NODE>> \"<<CLAUDE_DIR>>/hooks/review-gate.js\"",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -103,6 +119,7 @@
   "_hinweise": [
     "context-mode-cache-heal.mjs (SessionStart) nur bei installiertem context-mode-Plugin eintragen.",
     "aggregate.js (SessionStart) nur bei installiertem task-roadmap-Skill eintragen.",
-    "Ohne gesetztes env.AGENTICOS_VAULT sind memory-tags-guard und vault-wikilink absichtlich inert."
+    "Ohne gesetztes env.AGENTICOS_VAULT sind memory-tags-guard und vault-wikilink absichtlich inert.",
+    "skill-gate.js (PreToolUse, deny) und review-gate.js (Stop, block) sind SCHARFE Gates, kein Hinweistext: skill-gate blockt groessere Code-Writes ohne vorherigen Superpowers-Process-Skill, review-gate blockt das Turn-Ende nach security-relevantem Code ohne security-reviewer-Lauf. Beide throtteln auf 1x pro Session (skill-gate: pro Datei) — der zweite Versuch laeuft bewusst durch (Escape-Hatch, kein Defekt). Wer die Gates nicht will, entfernt die beiden Eintraege."
   ]
 }

@@ -7,7 +7,7 @@ in `INSTALL.md`).
 
 Die Community-Version eines kompletten Claude-Code-Setups: das Obsidian-Plugin **Agentic OS**
 (Claude Code im eingebetteten Terminal, node-pty / ConPTY, Multi-Tab, Dashboard), ein
-Second-Brain-Vault-Template, 18 kuratierte Skills, Hooks, Review-Agents und eine
+Second-Brain-Vault-Template, 19 kuratierte Skills, Hooks, Review-Agents und eine
 CLAUDE.md-Vorlage. Ein User installiert das per Prompt in vier Stufen (FULL / MEDIUM / SMALL /
 SKILLS-ONLY).
 
@@ -18,7 +18,7 @@ und Paketierung von RobSpct. Lizenz MIT, siehe `LICENSE`.
 
 ```
 plugin/agentic-os/     Das Plugin (main.js minifiziert, manifest.json, styles.css, native/)
-skills/                18 Skills → ~/.claude/skills (competitor-analysis: projekt-lokal)
+skills/                19 Skills → ~/.claude/skills (competitor-analysis: projekt-lokal)
 claude-setup/          Globales Setup: CLAUDE.global.template.md, hooks/, agents/,
                        statusline/, settings.template.json, RTK.md
 vault-template/        Second-Brain-Gerüst → Vault des Users

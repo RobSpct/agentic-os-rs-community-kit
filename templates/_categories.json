@@ -18,6 +18,7 @@
   "mcp-builder": "Build & Dev",
   "cleanup": "Build & Dev",
 
+  "arbeitsroutine": "Core / Meta",
   "council": "Core / Meta",
   "llm-council": "Core / Meta",
   "skill-creator": "Core / Meta",

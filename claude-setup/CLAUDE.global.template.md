@@ -132,11 +132,14 @@ Hooks erinnern (gedrosselt); Ausführung bleibt beim Modell, nichts läuft ungef
 |----------|----------------|----------|
 | Jeder Prompt (1. + jeder 5.) | Routing-Karte refresht: Superpowers vor Implementierung, Review-Agents nach Edit | Hook `skill-routing-reminder` |
 | UI-Code (`.tsx/.jsx/.vue/.svelte/.css/.scss`) | `ui-ux-pro-max` erwägen | Hook `ui-skill-hint` |
+| Code-Neubau / Änderung >80 Z. ohne Superpowers-Skill | Write wird **geblockt** bis Process-Skill lief (1× pro Datei/Session) | Hook `skill-gate` (Deny-Hook) |
+| Turn-Ende nach Security-Code (auth/api/.env/token) ohne `security-reviewer` | Stop wird **geblockt** bis Agent lief (1× pro Session) | Hook `review-gate` (Stop-Hook) |
+| Jede Code-Änderungs-Absicht | Skill `arbeitsroutine` — Absicht→Skill→Reviewer→GSD-Frage | Description-Match (kein Hook) |
 | Jeder nicht-triviale Code-Edit | Ponytail-Leiter + Superpowers-Skill gecheckt? | Hook `tooling-discipline-guard` |
 | Komplexe/große Task ohne Plan | plan-first / Arbeitsprinzip 4 prüfen | Hook `plan-first-guard` |
 | Große Änderung (Write >150 / Edit >80 Z.) | Ponytail-Prüfung anbieten (nicht ungefragt) | Hook `large-change-hint` |
 | DB-Code (`.prisma/.sql`, Migrations) | `database-reviewer` erwägen | Hook `db-skill-hint` |
-| Neue `memory/*.md`/`wiki/*.md` ohne `tags:` | Write wird geblockt (einziger Deny-Hook) | Hook `memory-tags-guard` |
+| Neue `memory/*.md`/`wiki/*.md` ohne `tags:` | Write wird geblockt (Deny-Hook) | Hook `memory-tags-guard` |
 | Wissensfrage im Prompt | Read-Order-Hinweis (Vault zuerst) | Hook `vault-read-order-hint` |
 | Vault-Write | Wikilink-Nachpflege | Hook `vault-wikilink` |
 

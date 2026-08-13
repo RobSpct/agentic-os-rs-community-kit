@@ -1,6 +1,7 @@
 // Release-Gates: vor jedem Push ausfuehren (node scripts/release-gates.js).
 // Prueft Personendaten, Platzhalter-Konvention, Syntax, JSON, BOMs,
-// Skill/Kategorie-Deckung, tabsVisible-Konsistenz und die Repo-Struktur.
+// Skill/Kategorie-Deckung, tabsVisible-Konsistenz, die Repo-Struktur
+// sowie Lizenzen und Herkunft (Fremdkomponenten, ccusage-Pin, Skill-Provenienz).
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
@@ -136,19 +137,147 @@ JSON.stringify(bundleKeys) === JSON.stringify(tmplKeys)
   : bad('Bundle [' + bundleKeys + '] != Template [' + tmplKeys + ']');
 
 // --- Gate 8: erwartete Struktur ---
+// Dieselbe Datei laeuft im Produkt-Repo (mit product/) und im Community-Repo (ohne).
+// product/-Pflichten gelten nur, wo product/ existiert.
 console.log('\n=== Gate 8: Struktur ===');
+const hasProduct = fs.existsSync(path.join(REPO, 'product'));
 const must = ['LICENSE', 'README.md', 'INSTALL.md', 'CLAUDE.md', 'WINDOWS-SETUP.md',
+  'THIRD-PARTY-LICENSES.md',
   'plugin/agentic-os/main.js', 'plugin/agentic-os/manifest.json', 'plugin/agentic-os/styles.css',
   'claude-setup/CLAUDE.global.template.md', 'claude-setup/settings.template.json',
   'claude-setup/RTK.md', 'vault-template/CLAUDE.md', 'vault-template/memory/MEMORY.md',
   'vault-template/index.md', 'vault-template/scripts/vault-index-sync.mjs',
   'templates/settings.json', 'templates/projects.json', 'templates/_categories.json'];
+if (hasProduct) {
+  must.push('product/SKILLS-PROVENANCE.md', 'product/pinned-versions.json',
+    'product/PINNED-VERSIONS.md', 'product/compat-check.js', 'product/RELEASE-CHECKLIST.md');
+}
 const missing = must.filter(m => !fs.existsSync(path.join(REPO, m)));
 missing.length ? bad('fehlt: ' + missing.join(', ')) : ok(must.length + ' Pflichtdateien vorhanden');
 const hookCount = fs.readdirSync(REPO + '/claude-setup/hooks').length;
 const agentCount = fs.readdirSync(REPO + '/claude-setup/agents').length;
-hookCount === 11 ? ok('11 Hooks') : bad('Hooks: ' + hookCount + ' (erwartet 11)');
+hookCount === 13 ? ok('13 Hooks') : bad('Hooks: ' + hookCount + ' (erwartet 13)');
 agentCount === 10 ? ok('10 Agents') : bad('Agents: ' + agentCount + ' (erwartet 10)');
+
+// --- Gate 9: Lizenzen und Herkunft ---
+console.log('\n=== Gate 9: Lizenzen/Herkunft ===');
+const tplPath = REPO + '/THIRD-PARTY-LICENSES.md';
+if (!fs.existsSync(tplPath)) {
+  bad('THIRD-PARTY-LICENSES.md fehlt');
+} else {
+  const tpl = fs.readFileSync(tplPath, 'utf8');
+  // Jede mitgelieferte Fremdkomponente muss namentlich in der Datei stehen.
+  const mustName = ['node-pty', '@xterm/xterm', '@xterm/addon-fit', 'react', 'ccusage'];
+  const unnamed = mustName.filter(n => !tpl.includes(n));
+  unnamed.length ? bad('nicht in THIRD-PARTY-LICENSES.md: ' + unnamed.join(', '))
+                 : ok(mustName.length + ' Fremdkomponenten benannt');
+  /Permission is hereby granted/.test(tpl) ? ok('MIT-Volltext enthalten')
+                                           : bad('MIT-Volltext fehlt in THIRD-PARTY-LICENSES.md');
+}
+
+// ccusage muss auf eine feste Version gepinnt sein — "@latest" bricht das Paket,
+// sobald ccusage sein JSON-Format aendert.
+const bundleSrc = fs.readFileSync(REPO + '/plugin/agentic-os/main.js', 'utf8');
+const ccPins = bundleSrc.match(/ccusage@(?!latest)\d+\.\d+\.\d+/g) || [];
+const ccLatest = (bundleSrc.match(/ccusage@latest/g) || []).length;
+if (ccLatest > 0) bad('ccusage@latest im Bundle (' + ccLatest + 'x) — auf feste Version pinnen');
+else if (ccPins.length === 0) bad('kein ccusage-Versionspin im Bundle gefunden');
+else ok('ccusage gepinnt: ' + [...new Set(ccPins)].join(', '));
+
+// Provenienz-Tabelle muss jeden Skill-Ordner kennen (sonst landet Fremdcode ungeprueft im ZIP).
+// Nur im Produkt-Repo — das Community-Repo hat kein Release-ZIP und kein product/.
+const provPath = REPO + '/product/SKILLS-PROVENANCE.md';
+if (!hasProduct) {
+  ok('Provenienz/bundle-manifest ohne product/ uebersprungen (Community-Repo)');
+} else if (!fs.existsSync(provPath)) {
+  bad('product/SKILLS-PROVENANCE.md fehlt');
+} else {
+  const prov = fs.readFileSync(provPath, 'utf8');
+  const unlisted = skillDirs.filter(d => !prov.includes('`' + d + '`'));
+  unlisted.length ? bad('Skills ohne Provenienz-Eintrag: ' + unlisted.join(', '))
+                  : ok(skillDirs.length + ' Skills in SKILLS-PROVENANCE.md gelistet');
+}
+
+// bundle-manifest.json ist die Mechanik, SKILLS-PROVENANCE.md die Begruendung —
+// driften die auseinander, landet Fremdcode im ZIP oder ein eigener Skill fehlt darin.
+const bmPath = REPO + '/product/bundle-manifest.json';
+if (!hasProduct) {
+  // uebersprungen — Meldung kam schon beim Provenienz-Block
+} else if (!fs.existsSync(bmPath)) {
+  bad('product/bundle-manifest.json fehlt');
+} else {
+  const bm = JSON.parse(fs.readFileSync(bmPath, 'utf8'));
+  const listed = bm.skillsBundled.concat(Object.keys(bm.skillsInstallTime).filter(k => k !== '_comment'));
+  const fehlend = skillDirs.filter(d => !listed.includes(d));
+  const geister = listed.filter(s => !skillDirs.includes(s));
+  fehlend.length ? bad('Skills ohne bundle-manifest-Eintrag: ' + fehlend.join(', '))
+                 : ok(skillDirs.length + ' Skills im bundle-manifest erfasst');
+  if (geister.length) bad('bundle-manifest nennt nicht vorhandene Skills: ' + geister.join(', '));
+  // Jeder gebundelte Skill muss in der Provenienz-Tabelle auch als bundle markiert sein.
+  if (fs.existsSync(provPath)) {
+    const provText = fs.readFileSync(provPath, 'utf8');
+    const falschMarkiert = bm.skillsBundled.filter(s => {
+      const zeile = provText.split('\n').find(l => l.includes('`' + s + '`'));
+      return zeile && !/\|\s*bundle\s*\|?\s*$/.test(zeile.trim());
+    });
+    falschMarkiert.length
+      ? bad('als bundle gepackt, aber nicht als bundle dokumentiert: ' + falschMarkiert.join(', '))
+      : ok('bundle-manifest deckt sich mit SKILLS-PROVENANCE.md');
+  }
+}
+
+// Die Statusline darf keinen fremden Workflow-Code mehr enthalten (GSD-Herkunft, Block 2).
+const slPath = REPO + '/claude-setup/statusline/statusline.js';
+const sl = fs.readFileSync(slPath, 'utf8');
+const slForeign = ['gsd-hook-version', 'GSD', '.planning'].filter(m => sl.includes(m));
+slForeign.length ? bad('Fremd-Marker in statusline.js: ' + slForeign.join(', '))
+                 : ok('statusline.js frei von Fremd-Markern');
+
+// --- Gate 10: Versions-Matrix ---
+// Die Matrix ist nur etwas wert, wenn sie zum Code passt. Driftet sie ab, meldet
+// compat-check beim Kaeufer einen Fehler, den es im Repo gar nicht gibt.
+console.log('\n=== Gate 10: Versions-Matrix ===');
+const pvPath = REPO + '/product/pinned-versions.json';
+if (!hasProduct) {
+  ok('ohne product/ uebersprungen (Community-Repo)');
+} else if (!fs.existsSync(pvPath)) {
+  bad('product/pinned-versions.json fehlt');
+} else {
+  const pv = JSON.parse(fs.readFileSync(pvPath, 'utf8'));
+
+  // ccusage-Pin: Matrix gegen Bundle.
+  const bundle = fs.readFileSync(REPO + '/plugin/agentic-os/main.js', 'utf8');
+  const ccPin = pv.pinned && pv.pinned.ccusage && pv.pinned.ccusage.version;
+  if (!ccPin) bad('kein ccusage-Pin in der Matrix');
+  else if (bundle.includes('ccusage@' + ccPin)) ok('ccusage-Pin deckt sich mit dem Bundle: ' + ccPin);
+  else bad('Matrix sagt ccusage@' + ccPin + ', im Bundle steht das nicht');
+
+  // minAppVersion: Matrix gegen Plugin-Manifest.
+  const mf = JSON.parse(fs.readFileSync(REPO + '/plugin/agentic-os/manifest.json', 'utf8'));
+  const obsMin = pv.required && pv.required.obsidian && pv.required.obsidian.min;
+  obsMin === mf.minAppVersion
+    ? ok('obsidian minAppVersion deckt sich: ' + obsMin)
+    : bad('Matrix sagt obsidian ' + obsMin + ', manifest.json sagt ' + mf.minAppVersion);
+
+  // Marketplaces: Matrix gegen INSTALL.md (M6). Ein Eintrag, der nur an einer Stelle
+  // steht, wird beim Pflegen zuverlaessig vergessen.
+  const install = fs.readFileSync(REPO + '/INSTALL.md', 'utf8');
+  const fehlendM6 = pv.marketplaces.entries
+    .map(e => e.marketplace)
+    .filter(m => !install.includes(m));
+  fehlendM6.length
+    ? bad('in der Matrix, aber nicht in INSTALL.md M6: ' + fehlendM6.join(', '))
+    : ok(pv.marketplaces.entries.length + ' Marketplaces decken sich mit INSTALL.md');
+
+  // PINNED-VERSIONS.md ist generiert — muss zur Matrix passen.
+  try {
+    execFileSync(process.execPath, [REPO + '/product/gen-pinned-doc.js', '--check'],
+      { encoding: 'utf8', stdio: 'pipe' });
+    ok('PINNED-VERSIONS.md ist aus der Matrix erzeugt und aktuell');
+  } catch {
+    bad('PINNED-VERSIONS.md weicht ab -> node product/gen-pinned-doc.js');
+  }
+}
 
 console.log('\n' + (fail ? '### ' + fail + ' GATE(S) FEHLGESCHLAGEN' : '### ALLE GATES GRUEN'));
 process.exit(fail ? 1 : 0);

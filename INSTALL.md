@@ -68,7 +68,7 @@ Frage den User (bevorzugt per AskUserQuestion, eine Frage, vier Optionen):
 
 | Stufe | Was du bekommst | Module |
 |---|---|---|
-| **FULL** | Alles: Obsidian-UI, Second Brain, 18 Skills, globale CLAUDE.md, Hooks, Review-Agents, MCPs | M1 + M2 + M3 + M4 + M6 |
+| **FULL** | Alles: Obsidian-UI, Second Brain, alle mitgelieferten Skills, globale CLAUDE.md, Hooks, Review-Agents, MCPs | M1 + M2 + M3 + M4 + M6 |
 | **MEDIUM** | Obsidian-UI + Second Brain (Vault-Struktur, Auto-Memory, Memory-Hooks) — ohne Skills, ohne globale Config | M1 + M2 + M6 |
 | **SMALL** | Nur das Obsidian-UI-Plugin | M1 + M6 |
 | **SKILLS-ONLY** | Nur Skills, einzeln auswählbar — kein Plugin, kein Vault | M5 + M6 |
@@ -151,7 +151,7 @@ Gibt es `_categories.json`? Existiert `<<CLAUDE_DIR>>/skills-library/`?
 
 **3.2 Modus wählen lassen:**
 
-- **Additiv (Default, empfohlen):** Die 18 Skills aus `skills/` dazukopieren, nichts
+- **Additiv (Default, empfohlen):** Alle Skills aus `skills/` dazukopieren, nichts
   Vorhandenes anfassen. Bei Namensgleichheit fragen.
 - **Aufräumen:** Zusätzlich ungenutzte Skills des Users nach `<<CLAUDE_DIR>>/skills-library/`
   auslagern — **nur nach Bestätigung pro Skill**, nie blind. `skills-library/README.md`
@@ -241,12 +241,16 @@ restliche Setup ist davon unberührt.
 
 ## M5 — Skills einzeln auswählen
 
-Zeige dem User diese Tabelle und lass ihn auswählen (Mehrfachauswahl):
+Zeige dem User diese Tabelle und lass ihn auswählen (Mehrfachauswahl). **Vorher `skills/`
+scannen:** Zeilen, deren Ordner nicht vorliegt, gar nicht erst anbieten — je nach Paketvariante
+sind nicht alle enthalten. Fragt der User nach einem fehlenden Skill: Herkunft nennen (siehe
+Spalte „Braucht") und ihn dort holen lassen, statt einen Fehlschlag zu melden.
 
 | Skill | Was er tut | Braucht |
 |---|---|---|
-| `agent-reach` | Recherche auf X, Reddit, YouTube, GitHub, RSS u.a. | externe CLIs je Plattform |
-| `claude-api` | Apps gegen die Claude API / das Anthropic SDK bauen | — |
+| `agent-reach` | Recherche auf X, Reddit, YouTube, GitHub, RSS u.a. | externe CLIs je Plattform; ggf. nachladen: github.com/Panniantong/Agent-Reach |
+| `arbeitsroutine` | Legt vor Code-Arbeit Process-Skill, Review-Agent und GSD-Frage fest | Superpowers-Plugin (M6) für volle Wirkung |
+| `claude-api` | Apps gegen die Claude API / das Anthropic SDK bauen | ggf. nachladen: Anthropic Beispiel-Skills |
 | `cleanup` | Workspace-Audit: Bloat, veraltete Dateien, tote Verweise | — |
 | `competitor-analysis` | Mitbewerber-Scan mit Threat-Score, speist den COMPETITOR-Tab | Web-Suche, projekt-lokal |
 | `context-budget` | Auditiert den Context-Window-Verbrauch | — |
@@ -254,9 +258,9 @@ Zeige dem User diese Tabelle und lass ihn auswählen (Mehrfachauswahl):
 | `erklaer-mir` | Tech-Jargon in Klartext übersetzen (read-only) | — |
 | `find-skills` | Neue Skills finden und installieren | — |
 | `llm-council` | Große Council-Variante: 5 Advisors, Peer-Review, Verdikt | mehr Tokens |
-| `mcp-builder` | MCP-Server bauen (Python/TypeScript) | — |
+| `mcp-builder` | MCP-Server bauen (Python/TypeScript) | ggf. nachladen: Anthropic Beispiel-Skills |
 | `session-uebergabe` | Handoff-Dokument am Session-Ende | — |
-| `skill-creator` | Skills und CLAUDE.md-Dateien bauen und aufräumen | — |
+| `skill-creator` | Skills und CLAUDE.md-Dateien bauen und aufräumen | ggf. nachladen: Anthropic Beispiel-Skills |
 | `summarize` | Beliebige Inhalte zusammenfassen | — |
 | `task-roadmap` | Projekt-TODOs einsammeln, speist Übersicht + Board | Vault, `projects.json` |
 | `tiefe-recherche` | Mehrquellen-Recherche mit Zitaten, optional als Vault-Notiz | Web-Suche |
@@ -275,7 +279,7 @@ Claude Code holt sie selbst aus den Marketplaces.
 
 ```
 /plugin marketplace add obra/superpowers-marketplace
-/plugin marketplace add jnuyens/gsd-plugin
+/plugin marketplace add buildomator/buildomator
 /plugin marketplace add DietrichGebert/ponytail
 /plugin marketplace add JuliusBrussee/caveman
 /plugin marketplace add mksglu/context-mode
@@ -341,7 +345,9 @@ Nichts abhaken, was du nicht tatsächlich geprüft hast.
 - [ ] `<<NODE>> scripts/vault-index-sync.mjs --check` im Vault läuft ohne Fehler
 
 **Nach M3 (FULL):**
-- [ ] 18 Skills liegen in `<<CLAUDE_DIR>>/skills/` (bzw. die im Aufräum-Modus gewählte Menge)
+- [ ] Jeder Ordner aus `skills/` liegt in `<<CLAUDE_DIR>>/skills/` (bzw. die im Aufräum-Modus
+      gewählte Menge). Maßstab ist der Inhalt von `skills/` in diesem Paket, keine feste Zahl —
+      je nach Paketvariante sind es unterschiedlich viele.
 - [ ] `_categories.json` enthält alle installierten Skills, keine toten Einträge
 - [ ] `task-roadmap.json` wurde erzeugt (wenn M2 lief)
 

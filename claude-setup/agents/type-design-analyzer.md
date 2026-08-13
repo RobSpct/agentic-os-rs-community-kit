@@ -1,6 +1,6 @@
 ---
 name: type-design-analyzer
-description: Analyze type design for encapsulation, invariant expression, usefulness, and enforcement.
+description: Type design specialist for TypeScript. Use PROACTIVELY when defining or reshaping domain types, interfaces, discriminated unions, or API contracts. Checks whether types make illegal states unrepresentable, express invariants, encapsulate internals, and are actually enforced rather than cosmetic.
 model: sonnet
 tools: [Read, Grep, Glob]
 ---

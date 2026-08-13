@@ -29,7 +29,7 @@ Alternativ selbst klonen, Claude Code im Ordner öffnen und sagen:
 
 | Stufe | Obsidian-UI | Second Brain | Skills | Globale Config |
 |---|:---:|:---:|:---:|:---:|
-| **FULL** | ✅ | ✅ | ✅ 18 | ✅ CLAUDE.md, Hooks, Agents, MCPs |
+| **FULL** | ✅ | ✅ | ✅ 19 | ✅ CLAUDE.md, Hooks, Agents, MCPs |
 | **MEDIUM** | ✅ | ✅ | — | nur Memory-Hooks |
 | **SMALL** | ✅ | — | — | — |
 | **SKILLS-ONLY** | — | — | ✅ einzeln wählbar | — |
@@ -66,14 +66,16 @@ empfehlen — einer blockt Notizen ohne Tags, einer verlinkt Erwähnungen automa
 
 ### Skills (`skills/`)
 
-18 kuratierte Skills — Recherche (`tiefe-recherche`, `agent-reach`, `summarize`), Vault-Arbeit
+19 kuratierte Skills — Recherche (`tiefe-recherche`, `agent-reach`, `summarize`), Vault-Arbeit
 (`vault-notiz`, `vault-export`, `vault-health-abarbeiten`), Entscheidungen (`council`,
 `llm-council`), Bauen (`claude-api`, `mcp-builder`, `skill-creator`) und mehr. Vollständige
 Liste mit Voraussetzungen: [`INSTALL.md`](INSTALL.md), Modul M5.
 
 ### Globale Config (`claude-setup/`)
 
-Die `CLAUDE.md`-Vorlage mit Memory-Routing und Skill-Routing, 11 Hooks, 10 Review-Agents
+Die `CLAUDE.md`-Vorlage mit Memory-Routing und Skill-Routing, 13 Hooks (darunter zwei
+scharfe Gates: `skill-gate` erzwingt Process-Skills vor großen Code-Änderungen,
+`review-gate` erzwingt den Security-Review vor Turn-Ende), 10 Review-Agents
 (TypeScript, React, Security, Performance …), eine Statusline und ein `settings.json`-Template.
 Der Installer **mergt** in eine vorhandene Konfiguration, statt sie zu ersetzen.
 
@@ -83,7 +85,7 @@ Der Installer **mergt** in eine vorhandene Konfiguration, statt sie zu ersetzen.
 
 ```
 plugin/agentic-os/   Das Obsidian-Plugin (main.js, manifest.json, styles.css, native/)
-skills/              18 kuratierte Skills → ~/.claude/skills
+skills/              19 kuratierte Skills → ~/.claude/skills
 claude-setup/        Globales Setup: CLAUDE.md-Vorlage, Hooks, Agents, settings-Template
 vault-template/      Second-Brain-Gerüst → dein Obsidian-Vault
 templates/           Config-Vorlagen (Dashboard, Projekt-Registry, Integrationen)
