@@ -26,8 +26,9 @@ const rel = (f) => f.replace(/\\/g, '/').replace(REPO.replace(/\\/g, '/') + '/',
 
 // --- Gate 1: Personendaten ---
 console.log('\n=== Gate 1: Personendaten ===');
-// "skaile"/"Kauffmann" sind in LICENSE/README/CLAUDE.md/manifest.json als Attribution erlaubt.
-const attributionOk = new Set(['LICENSE', 'README.md', 'CLAUDE.md', 'plugin/agentic-os/manifest.json']);
+// "skaile"/"Kauffmann" sind in LICENSE/NOTICE/README/CLAUDE.md/manifest.json als Attribution
+// erlaubt. NOTICE ist der konventionelle Ort fuer die Herkunft eines abgeleiteten Werks.
+const attributionOk = new Set(['LICENSE', 'NOTICE', 'README.md', 'CLAUDE.md', 'plugin/agentic-os/manifest.json']);
 // CLAUDE.md Zeile "grep -rn ..." ist das Release-Gate-Kommando selbst — es MUSS die
 // Suchbegriffe enthalten. Solche Zeilen ausnehmen, sonst prueft das Gate sich selbst.
 const isGateCmd = (line) => /grep -rn/.test(line);

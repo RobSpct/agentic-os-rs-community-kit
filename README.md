@@ -113,7 +113,9 @@ enthalten) und sollte funktionieren, ist aber nicht durchgetestet — Rückmeldu
 
 ## Lizenz
 
-MIT, siehe [`LICENSE`](LICENSE).
+MIT, siehe [`LICENSE`](LICENSE). Herkunft und Umfang der Beiträge stehen in
+[`NOTICE`](NOTICE), mitgelieferte Drittkomponenten in
+[`THIRD-PARTY-LICENSES.md`](THIRD-PARTY-LICENSES.md).
 
 Plugin-Grundlage © Sebastian Kauffmann — [sebaskauf/agentic-os](https://github.com/sebaskauf/agentic-os),
 ebenfalls MIT. Windows-Port, Dashboard-Features und Community-Paketierung von RobSpct.

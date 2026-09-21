@@ -1,0 +1,31 @@
+Agentic OS RS Community Kit
+===========================
+
+Diese Distribution ist ein abgeleitetes Werk des Obsidian-Plugins
+"Agentic OS" von Sebastian Kauffmann:
+
+  https://github.com/sebaskauf/agentic-os
+  https://skaile.de
+
+Das Original steht unter der MIT-Lizenz. Sein Copyright-Vermerk ist in
+LICENSE mit aufgeführt, wie die Lizenz es verlangt.
+
+Ergänzt wurden von RobSpct:
+
+- Windows-Port (ConPTY / node-pty ohne worker_threads)
+- Dashboard-Features: Task-Roadmap, Kanban-Board, Briefing-Tab,
+  Competitor-Cockpit, Vault-Tab
+- Second-Brain-Setup (Vault-Template, Auto-Memory, Skills, Hooks, Agents)
+- Community-Paketierung und der stufenweise Installer
+
+Auch diese Teile stehen unter der MIT-Lizenz (siehe LICENSE).
+
+
+Mitgelieferte Drittkomponenten
+------------------------------
+
+Behalten ihre jeweilige Lizenz. Vollständige Auflistung mit Lizenztexten
+in THIRD-PARTY-LICENSES.md.
+
+- node-pty (`plugin/agentic-os/native/`)
+  MIT, Copyright (c) Microsoft Corporation und Mitwirkende
