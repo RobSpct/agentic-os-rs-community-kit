@@ -5,6 +5,6 @@
 	"minAppVersion": "1.5.0",
 	"description": "Führt Claude Code in einem eingebetteten Terminal direkt in Obsidian aus (node-pty, plattformübergreifend: macOS + Windows/ConPTY). Multi-Tab, Pop-out, Dashboard mit Skill-/Agent-Launcher, Token-Bar, Task-Roadmap, Kanban-Board, Briefing und Competitor-Cockpit.",
 	"author": "RobSpct — basiert auf Agentic OS von Sebastian Kauffmann (skaile.de)",
-	"authorUrl": "https://github.com/RobSpct/Agentic-OS-UI---WIN-Community-Version",
+	"authorUrl": "https://github.com/RobSpct/agentic-os-rs-community-kit",
 	"isDesktopOnly": true
 }

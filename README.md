@@ -1,4 +1,4 @@
-# Agentic OS — Claude-Code-Setup als Community-Version
+# Agentic OS RS Community Kit — das komplette Claude-Code-Setup
 
 Ein komplettes, sofort nutzbares Claude-Code-Setup: **Claude Code in einem eingebetteten
 Terminal in Obsidian**, ein Dashboard drumherum, ein Second Brain mit Auto-Memory, kuratierte
@@ -8,7 +8,8 @@ Installiert wird es von Claude Code selbst — du sagst einen Satz, beantwortest
 fertig.
 
 > Basiert auf dem Obsidian-Plugin „Agentic OS" von Sebastian Kauffmann
-> ([skaile.de](https://skaile.de)). Diese Distribution ergänzt einen Windows-Port (ConPTY),
+> ([skaile.de](https://skaile.de), [Original-Repo](https://github.com/sebaskauf/agentic-os)).
+> Diese Distribution ergänzt einen Windows-Port (ConPTY) — macOS läuft weiterhin —,
 > mehrere Dashboard-Features, das Second-Brain-Setup und die Paketierung als Template.
 
 ---
@@ -17,7 +18,7 @@ fertig.
 
 Öffne Claude Code in einem beliebigen Ordner und sag:
 
-> **„Klone https://github.com/RobSpct/Agentic-OS-UI---WIN-Community-Version, lies INSTALL.md
+> **„Klone https://github.com/RobSpct/agentic-os-rs-community-kit, lies INSTALL.md
 > und richte das Setup bei mir ein."**
 
 Claude klont das Repo, fragt dich **welche Stufe** du willst, und arbeitet den Rest ab.
@@ -112,5 +113,7 @@ enthalten) und sollte funktionieren, ist aber nicht durchgetestet — Rückmeldu
 
 ## Lizenz
 
-MIT, siehe [`LICENSE`](LICENSE). Plugin-Grundlage © Sebastian Kauffmann (skaile.de);
-Windows-Port, Dashboard-Features und Community-Paketierung von RobSpct.
+MIT, siehe [`LICENSE`](LICENSE).
+
+Plugin-Grundlage © Sebastian Kauffmann — [sebaskauf/agentic-os](https://github.com/sebaskauf/agentic-os),
+ebenfalls MIT. Windows-Port, Dashboard-Features und Community-Paketierung von RobSpct.

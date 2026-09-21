@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2026 RobSpct
+Copyright (c) 2026 Sebastian Kauffmann (Agentic OS, https://github.com/sebaskauf/agentic-os)
+Copyright (c) 2026 RobSpct (Windows-Port, Dashboard-Features, Community-Paketierung)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +25,18 @@ SOFTWARE.
 
 ## Attribution
 
-Diese Distribution baut auf dem Obsidian-Plugin "Agentic OS" von
-Sebastian Kauffmann (https://skaile.de) auf.
+Diese Distribution ist ein abgeleitetes Werk des Obsidian-Plugins "Agentic OS"
+von Sebastian Kauffmann (https://skaile.de):
 
-Windows-Port (ConPTY), Dashboard-Features (Task-Roadmap, Kanban-Board,
-Briefing-Tab, Competitor-Cockpit, Vault-Tab), das Second-Brain-Setup und die
-Community-Paketierung stammen von RobSpct und stehen unter der obigen
-MIT-Lizenz.
+  https://github.com/sebaskauf/agentic-os
+
+Das Original steht unter der MIT-Lizenz; sein Copyright-Vermerk ist oben
+mit aufgeführt, wie die Lizenz es verlangt.
+
+Ergänzt wurden von RobSpct: Windows-Port (ConPTY), Dashboard-Features
+(Task-Roadmap, Kanban-Board, Briefing-Tab, Competitor-Cockpit, Vault-Tab),
+das Second-Brain-Setup und die Community-Paketierung. Auch diese Teile
+stehen unter der obigen MIT-Lizenz.
 
 Mitgelieferte Drittkomponenten behalten ihre jeweilige Lizenz:
 
