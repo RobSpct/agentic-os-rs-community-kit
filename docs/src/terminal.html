@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../plugin/agentic-os/styles.css">
+<style>
+  html,body{margin:0;padding:0;background:#0a0a0a;}
+  .agentic-os-root{
+    --bg:#0a0a0a; --bg-2:#0d0d0d; --surface:#161616; --surface-2:#1a1a1a; --surface-3:#141414;
+    --border:#2a2a2a; --border-2:#1f1f1f; --text:#e5e5e5; --muted:#888888; --dim:#5a5a5a;
+    --accent:#E23636; --accent-dim:#1f1212; --accent-2:#F25C5C; --green:#4ade80; --red:#f87171;
+    width:1400px; background:var(--bg); color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .term{background:#050505;padding:16px 18px 14px;font-size:12.5px;line-height:1.75;min-height:430px;}
+  .u{color:var(--accent);}
+  .g{color:var(--dim);}
+  .w{color:var(--text);}
+  .ok{color:#4ade80;}
+  .bl{color:#60a5fa;}
+  .statusbar{display:flex;align-items:center;gap:9px;padding:8px 14px;
+             border-top:1px solid var(--border-2);background:#0c0c0c;font-size:10px;
+             letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .si{border:1px solid var(--border);border-radius:3px;padding:3px 8px;}
+  .si b{color:var(--text);font-weight:500;}
+  .si.acc{border-color:var(--accent);color:var(--accent);}
+  .right{margin-left:auto;display:flex;gap:9px;}
+  .tokbar{height:3px;background:#161616;border-radius:2px;width:120px;overflow:hidden;display:inline-block;vertical-align:middle;}
+  .tokbar i{display:block;height:100%;width:38%;background:var(--accent);}
+</style></head>
+<body><div class="agentic-os-root">
+
+  <div class="chat-drawer-tabs">
+    <div class="chat-tab active" style="font-size:11px">claude <span class="chat-tab-close">×</span></div>
+    <div class="chat-tab" style="font-size:11px">claude (api) <span class="chat-tab-close">×</span></div>
+    <div class="chat-tab" style="font-size:11px">claude (vault) <span class="chat-tab-close">×</span></div>
+    <div class="chat-tab chat-tab-plus" style="font-size:11px;color:var(--dim)">+</div>
+  </div>
+
+  <div class="term">
+    <div><span class="u">&gt;</span> <span class="w">Lies INSTALL.md und richte das Setup bei mir ein.</span></div>
+    <div style="height:10px"></div>
+
+    <div class="g">Ich lese die Anleitung und prüfe, was auf diesem Rechner schon vorhanden ist.</div>
+    <div style="height:6px"></div>
+
+    <div class="tool-card tool-card-read">📄 <span class="g">Read</span> <span class="w">INSTALL.md</span></div><br>
+    <div class="tool-card tool-card-bash">⚡ <span class="g">Bash</span> <span class="w">claude --version · node --version</span></div><br>
+    <div class="tool-card tool-card-fs">📁 <span class="g">Glob</span> <span class="w">~/.claude/skills/**</span></div>
+    <div style="height:10px"></div>
+
+    <div class="w">Gefunden: Claude Code 2.1.4, Node 22.11.0, Obsidian 1.7.7.</div>
+    <div class="w">Keine bestehende <span class="bl">~/.claude/CLAUDE.md</span> — nichts wird überschrieben.</div>
+    <div style="height:10px"></div>
+
+    <div class="w">Welche Stufe soll ich einrichten?</div>
+    <div style="height:4px"></div>
+    <div><span class="u">  1)</span> <span class="w">FULL</span> <span class="g">— Obsidian-UI + Second Brain + 19 Skills + globale Config</span></div>
+    <div><span class="u">  2)</span> <span class="w">MEDIUM</span> <span class="g">— Obsidian-UI + Second Brain</span></div>
+    <div><span class="u">  3)</span> <span class="w">SMALL</span> <span class="g">— nur die Obsidian-UI</span></div>
+    <div><span class="u">  4)</span> <span class="w">SKILLS-ONLY</span> <span class="g">— nur Skills, einzeln wählbar</span></div>
+    <div style="height:10px"></div>
+
+    <div><span class="u">&gt;</span> <span class="w">1</span></div>
+    <div style="height:8px"></div>
+
+    <div class="tool-card tool-card-write">✎ <span class="g">Write</span> <span class="w">~/.claude/CLAUDE.md</span></div><br>
+    <div class="tool-card tool-card-write">✎ <span class="g">Write</span> <span class="w">~/.claude/settings.json (13 Hooks)</span></div><br>
+    <div class="tool-card tool-card-fs">📁 <span class="g">Copy</span> <span class="w">skills/ → ~/.claude/skills (19)</span></div><br>
+    <div class="tool-card tool-card-fs">📁 <span class="g">Copy</span> <span class="w">vault-template/ → Vault</span></div>
+    <div style="height:10px"></div>
+
+    <div><span class="ok">✓</span> <span class="w">Setup eingerichtet.</span> <span class="g">Obsidian neu laden, dann Plugin aktivieren.</span></div>
+    <div style="height:6px"></div>
+    <div><span class="u">&gt;</span> <span class="cursor" style="vertical-align:-1px"></span></div>
+  </div>
+
+  <div class="statusbar">
+    <span class="si">Modell <b>Opus 5</b></span>
+    <span class="si">Modus <b>auto</b></span>
+    <span class="si">Effort <b>medium</b></span>
+    <span class="si">Kontext <span class="tokbar"><i></i></span></span>
+    <span class="si">Workspace <b>home</b></span>
+    <span class="right">
+      <span class="si acc">● Claude Code bereit</span>
+      <span class="si">Terminal <b>node-pty</b></span>
+    </span>
+  </div>
+
+</div></body></html>

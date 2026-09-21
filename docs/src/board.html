@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../plugin/agentic-os/styles.css">
+<style>
+  html,body{margin:0;padding:0;background:#0a0a0a;}
+  .agentic-os-root{
+    --bg:#0a0a0a; --bg-2:#0d0d0d; --surface:#161616; --surface-2:#1a1a1a; --surface-3:#141414;
+    --border:#2a2a2a; --border-2:#1f1f1f; --text:#e5e5e5; --muted:#888888; --dim:#5a5a5a;
+    --accent:#E23636; --accent-dim:#1f1212; --accent-2:#F25C5C; --green:#4ade80; --red:#f87171;
+    width:1400px; background:var(--bg); color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .chev{width:11px;height:11px;display:inline-block;border-right:2px solid var(--accent);
+        border-bottom:2px solid var(--accent);transform:rotate(-45deg);margin-right:2px;}
+  .kanban-card-title{font-size:11.5px;color:var(--text);line-height:1.45;margin-bottom:6px;}
+  .kanban-card-bot{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
+  .kt{font-size:9px;color:var(--dim);border:1px solid var(--border);border-radius:4px;padding:0 5px;}
+</style></head>
+<body><div class="agentic-os-root">
+
+  <div style="padding:14px 18px 10px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="display:flex;align-items:center;gap:8px;color:var(--accent)">
+          <span class="chev"></span>
+          <span class="mono small-caps" style="color:#f5f5f5;font-weight:600;letter-spacing:.22em;font-size:13px">AGENTIC&nbsp;OS</span>
+          <span class="cursor"></span>
+        </div>
+        <span style="color:var(--dim)">·</span>
+        <span class="mono small-caps" style="color:var(--muted)">claude code kommandozentrale</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="mono" style="color:var(--dim);font-size:10px;letter-spacing:.08em">sync <span style="color:var(--text)">gerade eben</span></span>
+        <div class="mono" style="display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid #2a1d12;border-radius:4px;background:#120c08;color:var(--accent);font-size:10px;letter-spacing:.16em">
+          <span class="live-dot"></span> LIVE
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px">
+      <button class="tab"><span class="ix">[00]</span> ÜBERSICHT</button>
+      <button class="tab"><span class="ix">[01]</span> BRIEFING</button>
+      <button class="tab"><span class="ix">[02]</span> VAULT</button>
+      <button class="tab active"><span class="ix">[03]</span> BOARD</button>
+      <button class="tab"><span class="ix">[04]</span> COMPETITOR</button>
+      <button class="tab"><span class="ix">[05]</span> RESEARCH</button>
+      <button class="tab"><span class="ix">[06]</span> SETTINGS</button>
+    </div>
+  </div>
+
+  <div class="kanban-wrap">
+    <div class="kanban-bar">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="chip"><span class="lbl">Projekt</span> alle</span>
+        <span class="chip"><span class="lbl">Sprint</span> 12</span>
+        <span class="chip"><span class="lbl">Aufgaben</span> 11</span>
+      </div>
+      <span class="mono" style="color:var(--dim);font-size:10px;letter-spacing:.14em">TODO.MD JE PROJEKT = WAHRHEIT · DRAG &amp; DROP SCHREIBT ZURÜCK</span>
+    </div>
+
+    <div class="kanban-board">
+
+      <div class="kanban-col">
+        <div class="kanban-col-head"><span class="kanban-col-title">Backlog</span><span class="kanban-col-count">4</span></div>
+        <div class="kanban-col-body">
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">webshop</span><span class="kanban-id">APP-114</span></div>
+            <div class="kanban-card-title">Checkout-Flow auf neue Zahlungsart erweitern</div>
+            <div class="kanban-card-bot"><span class="kt">@epic:payments</span><span class="kt">@sprint:13</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">webshop</span><span class="kanban-id">APP-118</span></div>
+            <div class="kanban-card-title">Bestellhistorie paginieren</div>
+            <div class="kanban-card-bot"><span class="kt">@epic:ux</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">api-service</span><span class="kanban-id">SRV-42</span></div>
+            <div class="kanban-card-title">Rate-Limiting pro API-Key</div>
+            <div class="kanban-card-bot"><span class="kt">@epic:platform</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">docs-site</span></div>
+            <div class="kanban-card-title">Suchindex für die Doku aufbauen</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kanban-col">
+        <div class="kanban-col-head"><span class="kanban-col-title">In Arbeit</span><span class="kanban-col-count">3</span></div>
+        <div class="kanban-col-body">
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">webshop</span><span class="kanban-id">APP-109</span></div>
+            <div class="kanban-card-title">Warenkorb-State über Sessions hinweg halten</div>
+            <div class="kanban-card-bot"><span class="kt">@sprint:12</span><span class="kanban-branch">feat/cart-state</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">api-service</span><span class="kanban-id">SRV-38</span></div>
+            <div class="kanban-card-title">Fehler-Logging strukturieren</div>
+            <div class="kanban-card-bot"><span class="kt">@sprint:12</span><span class="kanban-branch">fix/log-shape</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">docs-site</span><span class="kanban-id">DOC-7</span></div>
+            <div class="kanban-card-title">Einstiegsseite neu strukturieren</div>
+            <div class="kanban-card-bot"><span class="kt">@sprint:12</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kanban-col">
+        <div class="kanban-col-head"><span class="kanban-col-title">Review</span><span class="kanban-col-count">2</span></div>
+        <div class="kanban-col-body">
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">webshop</span><span class="kanban-id">APP-102</span></div>
+            <div class="kanban-card-title">Produktfilter: Mehrfachauswahl</div>
+            <div class="kanban-card-bot"><span class="kanban-pr">PR #214</span><span class="kanban-branch">feat/filter-multi</span></div>
+          </div>
+          <div class="kanban-card">
+            <div class="kanban-card-top"><span class="kanban-card-proj">api-service</span><span class="kanban-id">SRV-31</span></div>
+            <div class="kanban-card-title">Migration auf neues Auth-Schema</div>
+            <div class="kanban-card-bot"><span class="kanban-pr">PR #88</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kanban-col">
+        <div class="kanban-col-head"><span class="kanban-col-title">Fertig</span><span class="kanban-col-count">2</span></div>
+        <div class="kanban-col-body">
+          <div class="kanban-card" style="opacity:.62">
+            <div class="kanban-card-top"><span class="kanban-card-proj">webshop</span><span class="kanban-id">APP-97</span></div>
+            <div class="kanban-card-title">Bilder auf WebP umstellen</div>
+            <div class="kanban-card-bot"><span class="kanban-commit">a1f3c9d</span></div>
+          </div>
+          <div class="kanban-card" style="opacity:.62">
+            <div class="kanban-card-top"><span class="kanban-card-proj">docs-site</span><span class="kanban-id">DOC-4</span></div>
+            <div class="kanban-card-title">Changelog automatisch erzeugen</div>
+            <div class="kanban-card-bot"><span class="kanban-commit">7b20e14</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div></body></html>

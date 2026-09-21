@@ -24,6 +24,7 @@ claude-setup/          Globales Setup: CLAUDE.global.template.md, hooks/, agents
 vault-template/        Second-Brain-Gerüst → Vault des Users
 templates/             Config-Vorlagen (settings/projects/integrations/_categories/competitor)
 skills-library/        Konzept-Doku: inaktive Skills auslagern
+docs/                  README-Screenshots + Social Preview (aus HTML gerendert, s.u.)
 INSTALL.md             Stufen-Installer (Prosa für Claude, KEIN Shell-Skript)
 README.md              Einstieg für den User
 WINDOWS-SETUP.md       Windows-Hintergrund + Troubleshooting
@@ -96,6 +97,26 @@ was in mancher Konsole nach Mojibake aussieht, ist meist nur die Anzeige. Erst m
   als Schätzung labeln.
 - `templates/settings.json` und die `settingsDefaults()` im Bundle müssen dieselben
   `tabsVisible`-Schlüssel kennen, sonst verschwinden Tabs stillschweigend.
+
+## README-Screenshots (`docs/`)
+
+Das Dashboard ist ein Obsidian-Plugin ohne HTTP-Server — es lässt sich **nicht** wie eine
+Web-App im Browser aufrufen und abfotografieren. Die Bilder in `docs/` entstehen deshalb aus
+HTML-Dateien, die das echte `plugin/agentic-os/styles.css` einbinden und das Markup aus
+`main.js` nachbauen (React mit Inline-Styles; Klassen wie `.tab`, `.kanban-card`, `.tool-card`
+kommen aus dem Stylesheet). Gerendert wird per Chrome-Screenshot.
+
+Daraus folgen zwei Regeln:
+
+- **Farben und Maße nie von Hand erfinden.** Die Variablen stehen im Stylesheet
+  (`--accent: #E23636`, `--bg: #0a0a0a`, `--border: #2a2a2a`). Ändert sich das Plugin-Styling,
+  müssen die Screenshots neu gerendert werden, sonst zeigt die README einen Stand, den es
+  nicht mehr gibt.
+- **Nur Beispieldaten.** Keine echten Projektnamen, Pfade, Ticket-Keys oder Beträge —
+  Gate 1 prüft nur Text, nicht Bildinhalte, und würde einen Leak im PNG nicht bemerken.
+
+`social-preview.png` (1280×640) ist zusätzlich das Bild unter Repo-Settings → Social preview;
+LinkedIn und andere Plattformen ziehen es beim Teilen des Links.
 
 ## Release-Hygiene
 

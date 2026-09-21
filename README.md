@@ -7,10 +7,36 @@ Skills, Hooks und Review-Agents.
 Installiert wird es von Claude Code selbst — du sagst einen Satz, beantwortest ein paar Fragen,
 fertig.
 
+![Agentic OS RS Community Kit — Claude Code in Obsidian, fertig eingerichtet. Windows und macOS, 19 Skills, 10 Agents, 13 Hooks, vier Installationsstufen, MIT-Lizenz](docs/social-preview.png)
+
 > Basiert auf dem Obsidian-Plugin „Agentic OS" von Sebastian Kauffmann
 > ([skaile.de](https://skaile.de), [Original-Repo](https://github.com/sebaskauf/agentic-os)).
 > Diese Distribution ergänzt einen Windows-Port (ConPTY) — macOS läuft weiterhin —,
 > mehrere Dashboard-Features, das Second-Brain-Setup und die Paketierung als Template.
+
+---
+
+## Wie es aussieht
+
+Der Installer läuft im eingebetteten Terminal: du sagst einen Satz, Claude prüft was auf dem
+Rechner schon da ist, fragt nach der Stufe und arbeitet ab. Werkzeug-Aufrufe sind farbcodiert
+sichtbar — nichts passiert unsichtbar im Hintergrund:
+
+![Terminal-Tab in Obsidian: Claude liest INSTALL.md, prüft installierte Versionen, bietet vier Stufen zur Auswahl an und schreibt dann Config, Skills und Vault-Template. Unten eine Statusleiste mit Modell, Modus, Kontext-Auslastung und Workspace](docs/terminal.png)
+
+Die Übersicht zeigt, was in deiner Claude-Installation tatsächlich aktiv ist — Skills, Agents,
+Hooks, Plugins und MCP-Server, jeweils mit ihrem Ablageort. Ein Klick auf einen Skill schickt
+ihn ins Terminal:
+
+![Übersicht-Tab: Kennzahlen-Karten für Skills, Agents, Hooks, Plugins, MCPs und Installationsstufen, darunter die Skills nach Kategorie gruppiert mit Anzahl je Gruppe](docs/overview.png)
+
+Das Board sammelt die offenen Aufgaben aller registrierten Projekte. Quelle ist die `TODO.md`
+im jeweiligen Projekt — Verschieben einer Karte schreibt dorthin zurück, nicht in eine separate
+Datenbank:
+
+![Board-Tab: Kanban mit den Spalten Backlog, In Arbeit, Review und Fertig. Karten tragen Projektname, Ticket-ID sowie Tags für Epic, Sprint, Branch, Pull Request und Commit](docs/board.png)
+
+*Die Screenshots verwenden Beispielprojekte und -daten.*
 
 ---
 
@@ -91,6 +117,7 @@ claude-setup/        Globales Setup: CLAUDE.md-Vorlage, Hooks, Agents, settings-
 vault-template/      Second-Brain-Gerüst → dein Obsidian-Vault
 templates/           Config-Vorlagen (Dashboard, Projekt-Registry, Integrationen)
 skills-library/      Konzept: inaktive Skills auslagern statt löschen
+docs/                Screenshots für diese README + Social Preview
 INSTALL.md           Die Installationsanleitung, die Claude abarbeitet
 WINDOWS-SETUP.md     Windows-Hintergrund + Troubleshooting
 ```

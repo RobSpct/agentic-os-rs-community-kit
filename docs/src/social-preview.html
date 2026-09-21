@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0A0507;
+    --card:     #0E0A0C;
+    --border:   #2B1518;
+    --red:      #E8352E;
+    --red-dim:  #8F2420;
+    --fg:       #F0E9EA;
+    --muted:    #8A7276;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width:1280px; height:640px;
+    font-family:'JetBrains Mono', monospace;
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .glow { position:absolute; border-radius:50%; filter:blur(140px); }
+  .glow-a { width:700px; height:700px; background:var(--red);
+            opacity:.13; top:-330px; left:-200px; }
+  .glow-b { width:560px; height:560px; background:var(--red-dim);
+            opacity:.15; bottom:-280px; right:-160px; }
+
+  .window {
+    position:relative; z-index:2;
+    width:1120px; height:520px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 40px 100px rgba(0,0,0,.75);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* Kopfzeile wie im Dashboard: > AGENTIC OS ▌ · UNTERTITEL ... LIVE */
+  .topbar {
+    height:54px; flex-shrink:0;
+    display:flex; align-items:center;
+    padding:0 26px;
+    border-bottom:1px solid var(--border);
+    font-size:14px; letter-spacing:2.2px;
+  }
+  .chev { color:var(--red); margin-right:11px; font-weight:700; }
+  .brand { color:var(--fg); font-weight:700; }
+  .blk {
+    display:inline-block; width:10px; height:17px;
+    background:var(--red); vertical-align:-2px; margin-left:9px;
+  }
+  .sub { color:var(--muted); margin-left:15px; }
+  .live { margin-left:auto; display:flex; align-items:center; gap:9px;
+          color:var(--red); font-size:13px; letter-spacing:1.5px; }
+  .live-dot { width:8px; height:8px; border-radius:50%; background:var(--red); }
+
+  /* Tab-Reihe wie [00] ÜBERSICHT [01] BRIEFING ... */
+  .tabs {
+    display:flex; gap:9px; padding:18px 26px 0;
+    font-size:12.5px; letter-spacing:1.5px;
+  }
+  .tab {
+    border:1px solid var(--border); border-radius:5px;
+    padding:8px 13px; color:var(--muted);
+  }
+  .tab.on { border-color:var(--red); color:var(--red); }
+
+  .main { flex:1; padding:32px 26px 0; display:flex; flex-direction:column; }
+
+  h1 {
+    font-size:60px; font-weight:700; line-height:1.07;
+    color:var(--fg); letter-spacing:-1.8px;
+  }
+  h1 .accent { color:var(--red); }
+
+  .tagline {
+    margin-top:22px; font-size:22px; color:var(--muted); line-height:1.5;
+  }
+  .tagline b { color:var(--fg); font-weight:400; }
+
+  /* Statistik-Karten mit Verlauf wie im Dashboard */
+  .cards { display:flex; gap:11px; margin-top:auto; margin-bottom:26px; }
+  .c {
+    flex:1; border:1px solid var(--border); border-radius:7px;
+    padding:13px 15px;
+    background:linear-gradient(160deg, rgba(232,53,46,.14), rgba(232,53,46,0) 75%);
+  }
+  .c .n { font-size:27px; font-weight:700; color:var(--red); line-height:1.1; }
+  .c .l { font-size:11px; letter-spacing:1.6px; color:var(--muted); margin-top:5px; }
+
+  .foot {
+    display:flex; align-items:center;
+    padding:0 26px 22px;
+    font-size:14px; color:var(--muted);
+    white-space:nowrap;
+  }
+  .foot .sec { color:var(--red); margin-right:9px; }
+  .foot .repo { margin-left:auto; }
+  .foot .repo b { color:var(--fg); font-weight:500; }
+</style>
+</head>
+<body>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+
+  <div class="window">
+    <div class="topbar">
+      <span class="chev">&gt;</span><span class="brand">AGENTIC OS</span><span class="blk"></span>
+      <span class="sub">· CLAUDE CODE KOMMANDOZENTRALE</span>
+      <span class="live"><span class="live-dot"></span>LIVE</span>
+    </div>
+
+    <div class="tabs">
+      <span class="tab on">[00] ÜBERSICHT</span>
+      <span class="tab">[01] BRIEFING</span>
+      <span class="tab">[02] VAULT</span>
+      <span class="tab">[03] BOARD</span>
+      <span class="tab">[04] COMPETITOR</span>
+      <span class="tab">[05] RESEARCH</span>
+    </div>
+
+    <div class="main">
+      <h1>AGENTIC OS<br><span class="accent">RS COMMUNITY KIT</span></h1>
+
+      <div class="tagline">
+        Claude Code in Obsidian — <b>ein Prompt, fertig eingerichtet.</b>
+      </div>
+
+      <div class="cards">
+        <div class="c"><div class="n">19</div><div class="l">SKILLS</div></div>
+        <div class="c"><div class="n">10</div><div class="l">AGENTS</div></div>
+        <div class="c"><div class="n">13</div><div class="l">HOOKS</div></div>
+        <div class="c"><div class="n">4</div><div class="l">STUFEN</div></div>
+        <div class="c"><div class="n">2</div><div class="l">PLATTFORMEN</div></div>
+        <div class="c"><div class="n">MIT</div><div class="l">LIZENZ</div></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="sec">§</span>WINDOWS + MACOS · SECOND BRAIN · TASK-ROADMAP
+      <span class="repo">github.com/RobSpct/<b>agentic-os-rs-community-kit</b></span>
+    </div>
+  </div>
+</body>
+</html>

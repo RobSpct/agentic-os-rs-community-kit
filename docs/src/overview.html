@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../plugin/agentic-os/styles.css">
+<style>
+  html,body{margin:0;padding:0;background:#0a0a0a;}
+  .agentic-os-root{
+    --bg:#0a0a0a; --bg-2:#0d0d0d; --surface:#161616; --surface-2:#1a1a1a; --surface-3:#141414;
+    --border:#2a2a2a; --border-2:#1f1f1f; --text:#e5e5e5; --muted:#888888; --dim:#5a5a5a;
+    --accent:#E23636; --accent-dim:#1f1212; --accent-2:#F25C5C; --green:#4ade80; --red:#f87171;
+    width:1400px; background:var(--bg); color:var(--text);
+    font-family:'JetBrains Mono',monospace; padding-bottom:20px !important;
+  }
+  .chev{width:11px;height:11px;display:inline-block;border-right:2px solid var(--accent);
+        border-bottom:2px solid var(--accent);transform:rotate(-45deg);margin-right:2px;}
+  .statrow{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:0 18px;margin-top:14px;}
+  .sc{background:linear-gradient(160deg,rgba(226,54,54,.16),rgba(226,54,54,0) 70%),
+      linear-gradient(180deg,#181818 0%,#131313 100%);
+      border:1px solid var(--border);border-radius:6px;padding:14px 14px 13px;}
+  .sc .n{font-size:30px;font-weight:700;color:var(--accent);line-height:1;}
+  .sc .l{font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:7px;}
+  .sc .s{font-size:9.5px;color:var(--dim);margin-top:4px;letter-spacing:.04em;}
+  .banner{margin:14px 18px 0;padding:11px 14px;border:1px solid #2a1d12;border-left:2px solid var(--accent);
+          border-radius:4px;background:#120c08;display:flex;align-items:center;gap:12px;font-size:11.5px;}
+  .banner .tag{color:var(--accent);letter-spacing:.16em;font-size:10px;}
+  .banner .more{margin-left:auto;color:var(--accent);letter-spacing:.14em;font-size:10px;}
+  .grp{margin:0 18px;border:1px solid var(--border-2);border-radius:5px;background:#0f0f0f;
+       padding:11px 14px;display:flex;align-items:center;gap:10px;font-size:11.5px;margin-bottom:7px;}
+  .grp .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+  .grp .cnt{margin-left:auto;color:var(--dim);border:1px solid var(--border);border-radius:3px;
+            padding:2px 9px;font-size:10px;}
+  .secline{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--dim);
+           font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin:20px 0 11px;}
+  .secline .k{color:var(--accent);}
+  .secline .on{border:1px solid var(--accent);color:var(--accent);border-radius:4px;padding:5px 11px;}
+  .secline .off{border:1px solid var(--border);color:var(--muted);border-radius:4px;padding:5px 11px;}
+</style></head>
+<body><div class="agentic-os-root">
+
+  <div style="padding:14px 18px 10px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="display:flex;align-items:center;gap:8px;color:var(--accent)">
+          <span class="chev"></span>
+          <span class="mono small-caps" style="color:#f5f5f5;font-weight:600;letter-spacing:.22em;font-size:13px">AGENTIC&nbsp;OS</span>
+          <span class="cursor"></span>
+        </div>
+        <span style="color:var(--dim)">·</span>
+        <span class="mono small-caps" style="color:var(--muted)">claude code kommandozentrale</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="mono" style="color:var(--dim);font-size:10px;letter-spacing:.08em">sync <span style="color:var(--text)">gerade eben</span></span>
+        <div class="mono" style="display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid #2a1d12;border-radius:4px;background:#120c08;color:var(--accent);font-size:10px;letter-spacing:.16em">
+          <span class="live-dot"></span> LIVE
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px">
+      <button class="tab active"><span class="ix">[00]</span> ÜBERSICHT</button>
+      <button class="tab"><span class="ix">[01]</span> BRIEFING</button>
+      <button class="tab"><span class="ix">[02]</span> VAULT</button>
+      <button class="tab"><span class="ix">[03]</span> BOARD</button>
+      <button class="tab"><span class="ix">[04]</span> COMPETITOR</button>
+      <button class="tab"><span class="ix">[05]</span> RESEARCH</button>
+      <button class="tab"><span class="ix">[06]</span> SETTINGS</button>
+    </div>
+  </div>
+
+  <div class="banner">
+    <span class="tag">BRIEFING</span>
+    <b style="color:var(--text);font-weight:600">Dein Briefing ist fertig</b>
+    <span style="color:var(--dim);font-size:10.5px">2026-09-21</span>
+    <span class="more">ANSEHEN ›</span>
+  </div>
+
+  <div class="statrow">
+    <div class="sc"><div class="n">19</div><div class="l">Skills</div><div class="s">~/.claude/skills</div></div>
+    <div class="sc"><div class="n">10</div><div class="l">Agents</div><div class="s">~/.claude/agents</div></div>
+    <div class="sc"><div class="n">13</div><div class="l">Hooks</div><div class="s">settings.json</div></div>
+    <div class="sc"><div class="n">9</div><div class="l">Plugins</div><div class="s">~/.claude/plugins</div></div>
+    <div class="sc"><div class="n">5</div><div class="l">MCPs</div><div class="s">claude.json + .mcp.json</div></div>
+    <div class="sc"><div class="n">4</div><div class="l">Stufen</div><div class="s">FULL → SKILLS-ONLY</div></div>
+  </div>
+
+  <div class="secline">
+    <span class="k">§</span> Skills für <span style="color:var(--text)">global</span> · 19 global · Klick → Terminal
+    <span class="on">AKTIV 19</span><span class="off">LAGER</span><span class="off">KATEGORIE</span>
+  </div>
+
+  <div class="grp"><span class="dot"></span> RECHERCHE <span class="cnt">4</span></div>
+  <div class="grp"><span class="dot"></span> VAULT <span class="cnt">3</span></div>
+  <div class="grp"><span class="dot"></span> ENTSCHEIDUNG <span class="cnt">2</span></div>
+  <div class="grp"><span class="dot"></span> BAUEN <span class="cnt">10</span></div>
+
+  <div class="secline">
+    <span class="k">§</span> Agents für <span style="color:var(--text)">global</span> · 10 global
+    <span class="on">AKTIV 10</span><span class="off">DEAKTIVIERT</span>
+  </div>
+
+</div></body></html>
