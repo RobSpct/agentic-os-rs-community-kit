@@ -98,6 +98,16 @@ empfehlen — einer blockt Notizen ohne Tags, einer verlinkt Erwähnungen automa
 `llm-council`), Bauen (`claude-api`, `mcp-builder`, `skill-creator`) und mehr. Vollständige
 Liste mit Voraussetzungen: [`INSTALL.md`](INSTALL.md), Modul M5.
 
+**Warum nur 19?** Claude Code lädt Name und Beschreibung jedes aktiven Skills in den
+Kontext — aus `~/.claude/skills`, dem Projekt und allen Plugins, bei jedem Prompt. Eine
+Vorfilterung nach Aufgabe gibt es nicht; der Inhalt eines Skills kommt erst beim Aufruf
+dazu. Jeder Skill kostet also, auch wenn er gerade nicht passt. Deshalb kuratiert statt
+gesammelt: Selten Gebrauchtes liegt im [Lager](skills-library/README.md), wird nicht
+geladen und bei Bedarf in das `.claude/skills` eines einzelnen Projekts kopiert. Welcher
+Skill wann läuft, entscheidet eine Routing-Tabelle in der `CLAUDE.md` plus Hooks
+(`skill-routing-reminder`, `skill-gate`), nicht Claudes Bauchgefühl. Was die Liste gerade
+kostet, zeigt der Skill `context-budget`.
+
 ### Globale Config (`claude-setup/`)
 
 Die `CLAUDE.md`-Vorlage mit Memory-Routing und Skill-Routing, 13 Hooks (darunter zwei
